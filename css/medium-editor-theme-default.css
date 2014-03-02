@@ -65,4 +65,5 @@
   color: white; }
 
 .medium-editor-placeholder:after {
-  color: white; }
+  font-style: italic;
+  opacity: 0.5; }

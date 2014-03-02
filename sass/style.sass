@@ -22,7 +22,7 @@ body
     background: #fff
     color: #000
 
-    padding: 20px 0
+    padding: 80px 0
     width: 1080px
     max-width: 100%
     margin-left: auto
@@ -187,10 +187,21 @@ body.dragover .drag-helper
 
 body.section-focused
 
+    .section.section-focused
+
+        .section-inner:before
+            content: ""
+            position: absolute
+            top: 0
+            bottom: 1em
+            left: 80px
+            width: 1px
+            background: red
+
     .section:not(.section-focused)
 
-        .section-inner
-            opacity: 0.3
+        // .section-inner
+        //     opacity: 0.3
 
         &:hover .section-inner
             opacity: 1
