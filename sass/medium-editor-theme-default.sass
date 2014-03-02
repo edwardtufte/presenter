@@ -1,6 +1,6 @@
 @import compass/css3
 
-$medium_editor_bgcolor:       #000
+$medium_editor_bgcolor:       #666
 $medium_editor_border_color:  #fff
 $medium_editor_button_size:   60px
 $medium_editor_link_color:    #fff
@@ -28,7 +28,6 @@ $medium_editor_link_color:    #fff
             border: none
             margin-right: 1px
             color: $medium_editor_link_color
-            @include transition(background-color .2s ease-in, color .2s ease-in)
             outline: none
 
             &.medium-editor-action-bold
@@ -56,7 +55,11 @@ $medium_editor_link_color:    #fff
             background-color: darken($medium_editor_bgcolor, 30)
             color: #fff
 
+        .medium-editor-button-first
+            border-radius: 3px 0 0 3px
+
         .medium-editor-button-last
+            border-radius: 0 3px 3px 0
             margin-right: 0
 
 .medium-editor-toolbar-form-anchor

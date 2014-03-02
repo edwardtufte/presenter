@@ -7,6 +7,7 @@ $ ->
     sections = [
         value: '<p>Content...</p>'
     ]
+
     if localStorage['presenterSections']
         sections = JSON.parse(localStorage.presenterSections)
 

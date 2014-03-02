@@ -36,7 +36,22 @@ class app.Sections extends Backbone.View
 
     postRender: ->
         mediumOptions =
-            buttons: ['bold', 'italic', 'quote']
+            buttons: [
+                'header1'
+                'header2'
+                'bold'
+                'italic'
+                'unorderedlist'
+                # 'pre'
+                # 'orderedlist'
+                # 'superscript'
+                # 'subscript'
+                # 'image'
+                # 'strikethrough'
+                # 'underline'
+                # 'anchor'
+                # 'quote'
+            ]
             firstHeader: 'h1'
             secondHeader: 'h2'
             targetBlank: true
@@ -48,6 +63,10 @@ class app.Sections extends Backbone.View
         new MediumEditor '.section .section-caption', $.extend({}, mediumOptions,
             placeholder: 'Add a caption...'
         )
+
+        $('[contenteditable]').each ->
+            @spellcheck = false
+            return true
 
         $('.sections').sortable
             handle: '.section-drag-handle'

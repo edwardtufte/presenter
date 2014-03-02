@@ -1,10 +1,10 @@
 .medium-toolbar-arrow-under:after {
   top: 60px;
-  border-color: black transparent transparent transparent; }
+  border-color: #666666 transparent transparent transparent; }
 
 .medium-toolbar-arrow-over:before {
   top: -8px;
-  border-color: transparent transparent black transparent; }
+  border-color: transparent transparent #666666 transparent; }
 
 .medium-editor-toolbar {
   background: rgba(255, 255, 255, 0.5);
@@ -13,16 +13,12 @@
     padding: 0; }
     .medium-editor-toolbar li button {
       font-size: inherit;
-      background-color: black;
+      background-color: #666666;
       min-width: 60px;
       height: 60px;
       border: none;
       margin-right: 1px;
       color: white;
-      -webkit-transition: background-color 0.2s ease-in, color 0.2s ease-in;
-      -moz-transition: background-color 0.2s ease-in, color 0.2s ease-in;
-      -o-transition: background-color 0.2s ease-in, color 0.2s ease-in;
-      transition: background-color 0.2s ease-in, color 0.2s ease-in;
       outline: none; }
       .medium-editor-toolbar li button.medium-editor-action-bold, .medium-editor-toolbar li button.medium-editor-action-bold * {
         font-weight: bold; }
@@ -33,17 +29,20 @@
         font-weight: normal;
         font-size: 40px; }
       .medium-editor-toolbar li button:hover {
-        background-color: black;
+        background-color: #333333;
         color: white; }
     .medium-editor-toolbar li .medium-editor-button-active {
-      background-color: black;
+      background-color: #1a1a1a;
       color: white; }
+    .medium-editor-toolbar li .medium-editor-button-first {
+      border-radius: 3px 0 0 3px; }
     .medium-editor-toolbar li .medium-editor-button-last {
+      border-radius: 0 3px 3px 0;
       margin-right: 0; }
 
 .medium-editor-toolbar-form-anchor input {
   height: 60px;
-  background: black;
+  background: #666666;
   color: white; }
   .medium-editor-toolbar-form-anchor input::-webkit-input-placeholder {
     color: white;
@@ -61,7 +60,7 @@
   color: white; }
 
 .medium-editor-toolbar-anchor-preview {
-  background: black;
+  background: #666666;
   color: white; }
 
 .medium-editor-placeholder:after {

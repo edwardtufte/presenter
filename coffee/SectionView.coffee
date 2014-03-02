@@ -33,8 +33,10 @@ class app.Section extends Backbone.View
             .attr('data-cid', @model.cid)
             .html("""
                 <div class="section-inner">
-                    <div class="section-helpers">
+                    <div class="section-helpers section-helpers-left">
                         <div class="section-drag-handle"></div>
+                    </div>
+                    <div class="section-helpers section-helpers-right">
                         <div class="section-delete"></div>
                     </div>
                     <div class="section-content">
