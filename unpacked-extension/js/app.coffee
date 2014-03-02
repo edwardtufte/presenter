@@ -203,6 +203,7 @@ class Section extends Backbone.View
         if type is 'image'
             value = """<img src="#{ value }">"""
 
+
         @$el.attr('data-type', type)
             .attr('data-cid', @model.cid)
             .html("""
