@@ -287,7 +287,9 @@ app.init = ->
     $('body').removeClass('dragenter dragover')
     $('.page-scroll').scroll -> $('body').scroll()
 
-    sections = []
+    sections = [
+        value: '<p>Content...</p>'
+    ]
     if localStorage['presenterSections']
         sections = JSON.parse(localStorage.presenterSections)
 
