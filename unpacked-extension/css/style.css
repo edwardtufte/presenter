@@ -13,18 +13,26 @@ body {
 
 .sections {
   padding: 20px;
-  width: 800px;
+  width: 900px;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto; }
 
 .section {
+  transition: opacity 0.3s;
   position: relative;
   padding: 20px 0;
   border: 1px solid red;
-  border-left: 0;
-  border-right: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
   margin-top: -1px; }
+  .section:hover {
+    border-color: red;
+    box-shadow: 0 0 0 2px red; }
+  .section[contenteditable]:focus {
+    outline: none;
+    border-color: red;
+    box-shadow: 0 0 0 2px red; }
   .section:first-child {
     border-top-width: 0; }
   .section:last-child {
@@ -49,6 +57,12 @@ body {
       left: 0;
       opacity: 0;
       transition: opacity 0.4s; }
+  .section .section-caption {
+    font-size: 15px;
+    width: 300px;
+    position: absolute;
+    top: 20px;
+    right: 0; }
   .section:hover .section-helpers {
     display: block; }
     .section:hover .section-helpers .section-drag-handle {
@@ -67,6 +81,10 @@ body {
   .section[data-type="image"] img {
     max-width: 100%; }
 
+.section[data-type="text"] .section-content {
+  width: 500px;
+  max-width: 100%; }
+
 h1, h2, h3 {
   color: red;
   font-style: italic;
@@ -84,9 +102,8 @@ h3 {
   font-size: 25px; }
 
 p {
-  margin: 0 auto 20px;
-  width: 500px;
-  max-width: 100%; }
+  margin-top: 0;
+  margin-bottom: 20px; }
   p:last-child {
     margin-bottom: 0; }
 
@@ -125,6 +142,11 @@ body.dragover .drag-helper {
   .add-section:before {
     content: "Add content";
     text-transform: uppercase; }
+
+body.section-focused .section:not(:focus) {
+  opacity: 0.3; }
+  body.section-focused .section:not(:focus):hover {
+    opacity: 1; }
 
 .axis path, .axis line {
   fill: none;

@@ -1,30 +1,28 @@
 (function() {
   var app;
-
   window.log = function() {
     if (this.console && this.console.log) {
       return console.log.apply(console, Array.prototype.slice.call(arguments));
     }
   };
-
   app = {};
-
   app.sections = [
     {
-      type: 'text',
+      type: 'header',
       value: '<h1>Sparkline theory and practice Edward Tufte</h1>'
     }, {
       type: 'text',
       value: '<p>A sparkline is a small intense, simple, word-sized graphic with typographic resolution. Sparklines mean that graphics are no longer cartoonish special occasions with captions and boxes, but rather sparkline graphic can be everywhere a word or number can be: embedded in a sentence, table, headline, map, spreadsheet, graphic. From Edward Tufte\'s book <i>Beautiful Evidence</i>.</p>\n<p><i>New developments in sparklines: November 2013.</i></p>\n<p><font size="+1"><b><i>Diluting Perceptual Cluster/Streak Bias:\nInformal, Inline, Interocular Trauma Tests</i></b></font>\n</p>'
     }, {
       type: 'text',
-      value: '<p>\nWhen people look at random number tables, they sees all kinds of clusters\nand streaks (in a completely random set of data). Similarly, when people are\nasked generate a random series of bits, they generate too few long streaks\n(such as 6 identical bits a row), because their model of what is random\ngreatly underestimates the amount of streakiness in truly random data.\n</p><p>Sports and election reporters are notorious for their\nstreak/cluster/momentum/turning-point/trendspotting\nnarrative over-reach. xkcd did this wonderful critique:</p>'
+      value: '<p>When people look at random number tables, they sees all kinds of clusters\nand streaks (in a completely random set of data). Similarly, when people are\nasked generate a random series of bits, they generate too few long streaks\n(such as 6 identical bits a row), because their model of what is random\ngreatly underestimates the amount of streakiness in truly random data.\n</p><p>Sports and election reporters are notorious for their\nstreak/cluster/momentum/turning-point/trendspotting\nnarrative over-reach. xkcd did this wonderful critique:</p>',
+      caption: '<p>\n    To dilute streak-guessing, randomize on time over the same data,\n    and compare random streaks with the observed data.\n    Below, the top sparkline shows the season\'s win-loss sequence\n    (the little horizontal line = home games, no line = road games).\n    Weighting by overall record of wins/losses and home/road effects\n    yields ten random sparklines. Hard to see the difference between\n    real and random.\n    </p>'
     }, {
       type: 'image',
       value: 'http://imgs.xkcd.com/comics/sports.png'
     }, {
       type: 'text',
-      value: '<p>\nTo dilute streak-guessing, randomize on time over the same data,\nand compare random streaks with the observed data.\nBelow, the top sparkline shows the season\'s win-loss sequence\n(the little horizontal line = home games, no line = road games).\nWeighting by overall record of wins/losses and home/road effects\nyields ten random sparklines. Hard to see the difference between\nreal and random.</p><p>\n\nThe 10 random sparkline sequences can be regenerated again and\nagain by, oddly enough, clicking on "Regenerate random seasons."\nThis is looking a bit like bootstrap calculation. For the real and amazing\nbootstrap, applied to data graphics and contour lines, see Persi Diaconis\nand Bradley Efron, <a target="_blank" href="http://statistics.stanford.edu/~ckirby/techreports/BIO/BIO%2083.pdf">"Computer Intensive Methods in Statistics."</a>\n</p><p>The test of the 10 randomized sparklines vs. the actual data is an\n"Interocular Trauma Test" because the comparison hits the analyst right\nbetween the eyes. This little randomization check-up, which can be repeated\nagain and again, is seen by the analyst at the very moment of making\ninferences based on a statistical graphic of observed data.\n</p>'
+      value: '<p>\nTo dilute streak-guessing, randomize on time over the same data,\nand compare random streaks with the observed data.\nBelow, the top sparkline shows the season\'s win-loss sequence\n(the little horizontal line = home games, no line = road games).\nWeighting by overall record of wins/losses and home/road effects\nyields ten random sparklines. Hard to see the difference between\nreal and random.</p>\n\n<p>\nThe 10 random sparkline sequences can be regenerated again and\nagain by, oddly enough, clicking on "Regenerate random seasons."\nThis is looking a bit like bootstrap calculation. For the real and amazing\nbootstrap, applied to data graphics and contour lines, see Persi Diaconis\nand Bradley Efron, <a target="_blank" href="http://statistics.stanford.edu/~ckirby/techreports/BIO/BIO%2083.pdf">"Computer Intensive Methods in Statistics."</a>\n</p><p>The test of the 10 randomized sparklines vs. the actual data is an\n"Interocular Trauma Test" because the comparison hits the analyst right\nbetween the eyes. This little randomization check-up, which can be repeated\nagain and again, is seen by the analyst at the very moment of making\ninferences based on a statistical graphic of observed data.\n</p>'
     }, {
       type: 'text',
       value: '&nbsp;&shy;\n    <iframe style="border: 0; height: 800px; width: 800px" scrolling="no" src="http://adamschwartz.co/et-notebooks/sparklines-randomized/"></iframe>'
@@ -33,19 +31,16 @@
       value: '<p>\nConsuming a horizontal length of only 14 letterspaces, each sparkline\nin the big table above provides a look at the price and the changes in\nprice for every day for years, and the overall time pattern. <i>This financial\ntable reports 24 numbers accurate to 5 significant digits; the accompanying\nsparklines show about 14,000 numbers readable from 1 to 2 significant digits.\nThe idea is to be approximately right rather than exactly wrong.</i>&nbsp;<font size="-1">1</font>\n</p>\n\n<p>By showing recent change in relation to many past changes, sparklines\nprovide a context for nuanced analysis—and, one hopes, better decisions.\nMoreover, the year-long daily history reduces <i>recency bias,</i> the persistent\nand widespread over-weighting of recent events in making decisions.\nTables sometimes reinforce recency bias by showing only current levels\nor recent changes; sparklines improve the attention span of tables.\n</p>\n\n<p>Tables of numbers attain maximum densities of only 300 characters per\nsquare inch or 50 characters per square centimeter. In contrast, graphical\ndisplays have far greater resolutions; a cartographer notes "the resolving\npower of the eye enables it to differentiate to 0.1 mm where provoked to\ndo so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies\n60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>'
     }
   ];
-
   app.init = function() {
     app.setupDragAndDropListener();
     app.setupAddSectionButton();
     return app.render();
   };
-
   app.setupImageListener = function() {
     return chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       return log(request.urls);
     });
   };
-
   app.makeGraph = function(columns, data) {
     var height, line, margin, svg, width, x, xAxis, y, yAxis, yDomain;
     margin = {
@@ -81,9 +76,8 @@
     svg.append("path").datum(data).attr("class", "line").attr("d", line);
     return "<svg width=" + (width + margin.left + margin.right) + " height=" + (height + margin.top + margin.bottom) + ">" + (svg.html()) + "</svg>";
   };
-
   app.makeTable = function(data) {
-    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len1, _len2;
+    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len2, _len3;
     columns = data.shift();
     rows = data;
     html = "<table><thead><tr>";
@@ -92,10 +86,10 @@
       html += "<th>" + column + "</th>";
     }
     html += '</tr></thead><tbody>';
-    for (_j = 0, _len1 = rows.length; _j < _len1; _j++) {
+    for (_j = 0, _len2 = rows.length; _j < _len2; _j++) {
       row = rows[_j];
       html += "<tr>";
-      for (_k = 0, _len2 = row.length; _k < _len2; _k++) {
+      for (_k = 0, _len3 = row.length; _k < _len3; _k++) {
         column = row[_k];
         html += "<td>" + column + "</td>";
       }
@@ -109,19 +103,17 @@
     });
     return app.render();
   };
-
   app.setupDragAndDropListener = function() {
     document.body.ondrop = function(e) {
-      var file, files, onload, reader, _i, _len, _ref, _ref1, _ref2, _ref3;
-      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref1 = _ref.files) != null ? _ref1.length : void 0 : void 0 : void 0) > 0) {
+      var file, files, onload, reader, _i, _len, _ref, _ref2, _ref3, _ref4;
+      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref2 = _ref.files) != null ? _ref2.length : void 0 : void 0 : void 0) > 0) {
         onload = function(e) {
-          var data, error;
+          var data;
           try {
             data = d3.csv.parseRows(atob(e.target.result.slice(21)));
             app.makeTable(data);
             return $('body').removeClass('dragenter dragover');
-          } catch (_error) {
-            error = _error;
+          } catch (error) {
             return console.error(e, error);
           }
         };
@@ -133,7 +125,7 @@
             reader.onload = onload;
             reader.readAsDataURL(file);
           }
-          if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
+          if (((_ref3 = file.type) != null ? (_ref4 = _ref3.split('\/')) != null ? _ref4[0].toLowerCase() : void 0 : void 0) === 'image') {
             reader = new FileReader();
             reader.onload = function(e) {
               app.sections.push({
@@ -170,7 +162,6 @@
       return false;
     };
   };
-
   app.render = function() {
     var editor, html, section, _i, _len, _ref;
     $('body').removeClass('dragenter dragover');
@@ -182,9 +173,9 @@
       if (section.type === 'image') {
         html = "<img src=\"" + section.value + "\">";
       }
-      $('.sections').append("<div class=\"section\" data-type=\"" + section.type + "\">\n    <div class=\"section-helpers\">\n        <div class=\"section-drag-handle\"></div>\n    </div>\n    <div class=\"section-content\">\n        " + html + "\n    </div>\n</div>");
+      $('.sections').append("<div class=\"section\" data-type=\"" + section.type + "\">\n    <div class=\"section-helpers\">\n        <div class=\"section-drag-handle\"></div>\n    </div>\n    <div class=\"section-content\">\n        " + html + "\n    </div>\n    " + (section.caption ? "<div class='section-caption'>" + section.caption + "</div>" : '') + "\n</div>");
     }
-    editor = new MediumEditor('.section[data-type="text"]', {
+    editor = new MediumEditor('.section[data-type="text"], .section[data-type="header"]', {
       buttons: ['bold', 'italic', 'quote'],
       firstHeader: 'h1',
       secondHeader: 'h2',
@@ -197,11 +188,16 @@
         return ui.placeholder.height(ui.helper.height());
       }
     });
-    return $('.page-scroll').scroll(function() {
+    $('.page-scroll').scroll(function() {
       return $('body').scroll();
     });
+    $('.section').on('focus', function() {
+      return $('body').addClass('section-focused');
+    });
+    return $('.section').on('blur', function() {
+      return $('body').removeClass('section-focused');
+    });
   };
-
   app.setupAddSectionButton = function() {
     return $('.add-section').click(function() {
       app.sections.push({
@@ -211,7 +207,6 @@
       return app.render();
     });
   };
-
   app.saveExport = function() {
     document.body.classList.add('capturing');
     return setTimeout(function() {
@@ -223,9 +218,7 @@
       }, 0);
     }, 300);
   };
-
   setTimeout(function() {
     return app.init();
   }, 0);
-
 }).call(this);

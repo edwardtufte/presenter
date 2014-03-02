@@ -3,7 +3,7 @@ window.log = -> console.log.apply console, Array::slice.call(arguments) if @cons
 app = {}
 
 app.sections = [{
-    type: 'text'
+    type: 'header'
     value: '''
         <h1>Sparkline theory and practice Edward Tufte</h1>
     '''
@@ -19,8 +19,7 @@ app.sections = [{
 },{
     type: 'text'
     value: '''
-        <p>
-        When people look at random number tables, they sees all kinds of clusters
+        <p>When people look at random number tables, they sees all kinds of clusters
         and streaks (in a completely random set of data). Similarly, when people are
         asked generate a random series of bits, they generate too few long streaks
         (such as 6 identical bits a row), because their model of what is random
@@ -28,6 +27,17 @@ app.sections = [{
         </p><p>Sports and election reporters are notorious for their
         streak/cluster/momentum/turning-point/trendspotting
         narrative over-reach. xkcd did this wonderful critique:</p>
+    '''
+    caption: '''
+    <p>
+        To dilute streak-guessing, randomize on time over the same data,
+        and compare random streaks with the observed data.
+        Below, the top sparkline shows the season's win-loss sequence
+        (the little horizontal line = home games, no line = road games).
+        Weighting by overall record of wins/losses and home/road effects
+        yields ten random sparklines. Hard to see the difference between
+        real and random.
+        </p>
     '''
 },{
     type: 'image'
@@ -42,8 +52,9 @@ Below, the top sparkline shows the season's win-loss sequence
 (the little horizontal line = home games, no line = road games).
 Weighting by overall record of wins/losses and home/road effects
 yields ten random sparklines. Hard to see the difference between
-real and random.</p><p>
+real and random.</p>
 
+<p>
 The 10 random sparkline sequences can be regenerated again and
 again by, oddly enough, clicking on "Regenerate random seasons."
 This is looking a bit like bootstrap calculation. For the real and amazing
@@ -266,10 +277,11 @@ app.render = ->
                 <div class="section-content">
                     #{ html }
                 </div>
+                #{ if section.caption then "<div class='section-caption'>#{ section.caption }</div>" else ''}
             </div>
         """
 
-    editor = new MediumEditor '.section[data-type="text"]',
+    editor = new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
         buttons: ['bold', 'italic', 'quote']
         firstHeader: 'h1'
         secondHeader: 'h2'
@@ -282,6 +294,12 @@ app.render = ->
             ui.placeholder.height ui.helper.height()
 
     $('.page-scroll').scroll -> $('body').scroll()
+
+    $('.section').on 'focus', ->
+        $('body').addClass('section-focused')
+
+    $('.section').on 'blur', ->
+        $('body').removeClass('section-focused')
 
 app.setupAddSectionButton = ->
     $('.add-section').click ->
