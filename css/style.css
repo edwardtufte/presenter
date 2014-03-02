@@ -17,7 +17,7 @@ body {
   background: white;
   color: black;
   padding: 20px 0;
-  width: 1000px;
+  width: 1080px;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto; }
@@ -27,9 +27,8 @@ body {
   .section .section-inner {
     *zoom: 1;
     margin: 0 auto;
-    width: 850px;
+    width: 900px;
     padding: 0 20px 20px;
-    min-height: 150px;
     transition: opacity 0.3s; }
     .section .section-inner:after {
       content: "";
@@ -41,7 +40,7 @@ body {
     overflow: hidden;
     position: absolute;
     top: 0;
-    bottom: 0;
+    min-height: 100%;
     right: 100%;
     opacity: 0; }
     .section .section-helpers div {
@@ -60,7 +59,7 @@ body {
       content: "Remove"; }
   .section .section-caption {
     font-size: 17px;
-    width: 300px;
+    width: 290px;
     float: right; }
     .section .section-caption.medium-editor-placeholder:after {
       opacity: 0; }

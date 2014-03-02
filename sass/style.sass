@@ -23,7 +23,7 @@ body
     color: #000
 
     padding: 20px 0
-    width: 1000px
+    width: 1080px
     max-width: 100%
     margin-left: auto
     margin-right: auto
@@ -34,9 +34,8 @@ body
     .section-inner
         +pie-clearfix
         margin: 0 auto
-        width: 850px
+        width: 900px
         padding: 0 20px 20px
-        min-height: 150px
         transition: opacity .3s
 
     &:hover .section-inner, &.section-focused .section-inner
@@ -50,7 +49,7 @@ body
         overflow: hidden
         position: absolute
         top: 0
-        bottom: 0
+        min-height: 100%
         right: 100%
         opacity: 0
 
@@ -74,7 +73,7 @@ body
 
     .section-caption
         font-size: 17px
-        width: 300px
+        width: 290px
         float: right
 
         &.medium-editor-placeholder:after
