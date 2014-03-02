@@ -138,3 +138,10 @@ body.dragover .drag-helper {
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px; }
+
+.chart svg {
+  display: inline-block; }
+.chart table {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 25px; }

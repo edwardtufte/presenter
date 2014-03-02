@@ -165,7 +165,7 @@ app.makeGraph = (columns, data) ->
       .attr("class", "line")
       .attr("d", line)
 
-    return "<svg>#{svg.html()}</svg>"
+    return "<svg width=#{width + margin.left + margin.right} height=#{height + margin.top + margin.bottom}>#{svg.html()}</svg>"
 
 app.makeTable = (data) ->
     columns = data.shift()
@@ -191,7 +191,7 @@ app.makeTable = (data) ->
 
     app.sections.push
         type: 'graph'
-        value: html + graphHtml
+        value: "<div class='chart'>#{html + graphHtml}</div>"
 
     app.render()
 
