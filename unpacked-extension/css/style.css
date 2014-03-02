@@ -175,7 +175,8 @@ body.dragover .drag-helper {
   width: 100%; }
 
 .add {
-  text-align: center; }
+  text-align: center;
+  margin-bottom: 20px; }
 
 .add-section {
   display: -moz-inline-stack;
