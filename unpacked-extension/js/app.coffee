@@ -154,13 +154,16 @@ class App extends Backbone.View
 class Section extends Backbone.View
     className: 'section'
     events:
-        'focus .section-content': 'addFocus'
-        'focus .section-caption': 'addFocus'
-
-        'blur .section-content': 'removeFocus'
-        'blur .section-caption': 'removeFocus'
+        'focus .section-content, .section-caption': 'addFocus'
+        'blur .section-content, .section-caption': 'removeFocus'
 
         'click .section-delete': 'handleDelete'
+        'input': 'input'
+
+    input: (e) ->
+        @model.set 'value', @$el.html()
+        console.log @model
+        return
 
     addFocus: ->
         $('body').addClass('section-focused')

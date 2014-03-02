@@ -172,11 +172,15 @@
     Section.prototype.className = 'section';
 
     Section.prototype.events = {
-      'focus .section-content': 'addFocus',
-      'focus .section-caption': 'addFocus',
-      'blur .section-content': 'removeFocus',
-      'blur .section-caption': 'removeFocus',
-      'click .section-delete': 'handleDelete'
+      'focus .section-content, .section-caption': 'addFocus',
+      'blur .section-content, .section-caption': 'removeFocus',
+      'click .section-delete': 'handleDelete',
+      'input': 'input'
+    };
+
+    Section.prototype.input = function(e) {
+      this.model.set('value', this.$el.html());
+      console.log(this.model);
     };
 
     Section.prototype.addFocus = function() {
