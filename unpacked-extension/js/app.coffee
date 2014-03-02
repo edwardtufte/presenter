@@ -55,6 +55,7 @@ inferences based on a statistical graphic of observed data.
 },{
     type: 'text'
     value: '''
+    &nbsp;&shy;
         <iframe style="border: 0; height: 800px; width: 800px" scrolling="no" src="http://adamschwartz.co/et-notebooks/sparklines-randomized/"></iframe>
     '''
 },{
