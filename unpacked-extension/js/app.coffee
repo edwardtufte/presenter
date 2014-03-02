@@ -166,6 +166,8 @@ class SectionModel extends Backbone.Model
 
 class SectionsCollection extends Backbone.Collection
     model: SectionModel
+    save: ->
+        localStorage.presenterSections = JSON.stringify(@toJSON())
 
 class Section extends Backbone.View
     className: 'section'
@@ -177,7 +179,9 @@ class Section extends Backbone.View
         'input': 'input'
 
     input: (e) ->
-        @model.set 'value', @$el.html()
+        value = @$('.section-content').html()
+        caption = @$('section-caption').html()
+        @model.set {value, caption}
         return
 
     addFocus: ->
@@ -219,11 +223,12 @@ class Sections extends Backbone.View
     el: '.sections'
     initialize: ->
         @listenTo @collection, 'add', (section) ->
+            @collection.save()
             @addChild(section)
             @postRender()
 
-        @listenTo @collection, 'change', (section) ->
-            localStorage.presenterSections = JSON.stringify(@collection.toJSON())
+        @listenTo @collection, 'change remove', (section) =>
+            @collection.save()
 
     addChild: (section) ->
         sectionView = new Section
