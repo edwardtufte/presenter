@@ -5,7 +5,7 @@ app = {}
 class Section extends Backbone.View
     className: 'section'
     render: ->
-        {value, type} = @model.toJSON()
+        {value, type, caption} = @model.toJSON()
 
         if type is 'image'
             value = """<img src="#{ value }">"""
@@ -17,7 +17,7 @@ class Section extends Backbone.View
             <div class="section-content">
                 #{ value }
             </div>
-            #{ if section.caption then "<div class='section-caption'>#{ section.caption }</div>" else ''}
+            #{ if caption then "<div class='section-caption'>#{ caption }</div>" else ''}
         """)
         @
 

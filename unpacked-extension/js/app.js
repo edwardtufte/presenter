@@ -21,12 +21,12 @@
     }
     Section.prototype.className = 'section';
     Section.prototype.render = function() {
-      var type, value, _ref;
-      _ref = this.model.toJSON(), value = _ref.value, type = _ref.type;
+      var caption, type, value, _ref;
+      _ref = this.model.toJSON(), value = _ref.value, type = _ref.type, caption = _ref.caption;
       if (type === 'image') {
         value = "<img src=\"" + value + "\">";
       }
-      this.$el.attr('data-type', type).html("<div class=\"section-helpers\">\n    <div class=\"section-drag-handle\"></div>\n</div>\n<div class=\"section-content\">\n    " + value + "\n</div>\n" + (section.caption ? "<div class='section-caption'>" + section.caption + "</div>" : ''));
+      this.$el.attr('data-type', type).html("<div class=\"section-helpers\">\n    <div class=\"section-drag-handle\"></div>\n</div>\n<div class=\"section-content\">\n    " + value + "\n</div>\n" + (caption ? "<div class='section-caption'>" + caption + "</div>" : ''));
       return this;
     };
     return Section;
