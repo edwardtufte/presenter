@@ -2,10 +2,23 @@ gulp = require('gulp')
 stylus = require('gulp-stylus')
 jade = require('gulp-jade')
 coffee = require('gulp-coffee')
+concat = require('gulp-concat');
+
+gulp.task 'gulp', ->
+  gulp.src(['./gulpfile.coffee']).pipe(coffee())
+    .pipe(gulp.dest('./'))
 
 gulp.task 'coffee', ->
-  gulp.src('./coffee/*')
-    .pipe(coffee())
+  gulp.src([
+    './coffee/setup.coffee'
+    './coffee/AppView.coffee'
+    './coffee/SectionModel.coffee'
+    './coffee/SectionCollection.coffee'
+    './coffee/SectionView.coffee'
+    './coffee/SectionsView.coffee'
+    './coffee/app.coffee']
+  ).pipe(coffee())
+    .pipe(concat("app.js"))
     .pipe(gulp.dest('./js/'))
 
 gulp.task 'stylus', ->

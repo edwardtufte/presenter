@@ -11,5 +11,8 @@
     "gulp-stylus": "0.0.7",
     "coffee-script": "~1.6.3",
     "nib": "~1.0.2"
+  },
+  "dependencies": {
+    "gulp-concat": "~2.1.7"
   }
 }

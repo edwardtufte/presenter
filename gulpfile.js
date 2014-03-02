@@ -1,5 +1,5 @@
 (function() {
-  var coffee, gulp, jade, stylus;
+  var coffee, concat, gulp, jade, stylus;
 
   gulp = require('gulp');
 
@@ -9,8 +9,14 @@
 
   coffee = require('gulp-coffee');
 
+  concat = require('gulp-concat');
+
+  gulp.task('gulp', function() {
+    return gulp.src(['./gulpfile.coffee']).pipe(coffee()).pipe(gulp.dest('./'));
+  });
+
   gulp.task('coffee', function() {
-    return gulp.src('./coffee/*').pipe(coffee()).pipe(gulp.dest('./js/'));
+    return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(coffee()).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
   });
 
   gulp.task('stylus', function() {

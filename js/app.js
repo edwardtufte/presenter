@@ -1,29 +1,28 @@
 (function() {
-  var App, Section, SectionModel, Sections, SectionsCollection, app, _ref, _ref1, _ref2, _ref3, _ref4,
+  window.app = {};
+
+}).call(this);
+
+(function() {
+  var _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  window.log = function() {
-    if (this.console && this.console.log) {
-      return console.log.apply(console, Array.prototype.slice.call(arguments));
-    }
-  };
-
-  App = (function(_super) {
+  app.AppView = (function(_super) {
     var onDrag;
 
-    __extends(App, _super);
+    __extends(AppView, _super);
 
-    function App() {
+    function AppView() {
       this.onDrop = __bind(this.onDrop, this);
-      _ref = App.__super__.constructor.apply(this, arguments);
+      _ref = AppView.__super__.constructor.apply(this, arguments);
       return _ref;
     }
 
-    App.prototype.el = 'body';
+    AppView.prototype.el = 'body';
 
-    App.prototype.events = {
+    AppView.prototype.events = {
       'click .add-section': 'addSection',
       'drop': 'onDrop',
       'mouseup': 'onMouseUp',
@@ -32,14 +31,14 @@
       'dragover': 'onDrag'
     };
 
-    App.prototype.initialize = function() {
+    AppView.prototype.initialize = function() {
       var sections;
-      return sections = new Sections({
+      return sections = new app.Sections({
         collection: this.collection
       }).render();
     };
 
-    App.prototype.onDrop = function(e) {
+    AppView.prototype.onDrop = function(e) {
       var file, files, onload, reader, _i, _len, _ref1, _ref2,
         _this = this;
       e = e.originalEvent;
@@ -74,7 +73,7 @@
       return false;
     };
 
-    App.prototype.onMouseUp = function(e) {
+    AppView.prototype.onMouseUp = function(e) {
       return this.$el.removeClass('dragenter dragover');
     };
 
@@ -93,13 +92,13 @@
       return false;
     };
 
-    App.prototype.addSection = function() {
+    AppView.prototype.addSection = function() {
       return this.collection.add({
         value: '<p>Content...</p>'
       });
     };
 
-    App.prototype.makeGraph = function(columns, data) {
+    AppView.prototype.makeGraph = function(columns, data) {
       var height, line, margin, svg, width, x, xAxis, y, yAxis, yDomain;
       margin = {
         top: 20,
@@ -135,7 +134,7 @@
       return "<svg width=" + (width + margin.left + margin.right) + " height=" + (height + margin.top + margin.bottom) + ">" + (svg.html()) + "</svg>";
     };
 
-    App.prototype.makeTable = function(data) {
+    AppView.prototype.makeTable = function(data) {
       var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len1, _len2;
       columns = data.shift();
       rows = data;
@@ -162,16 +161,23 @@
       });
     };
 
-    return App;
+    return AppView;
 
   })(Backbone.View);
 
-  SectionModel = (function(_super) {
+}).call(this);
+
+(function() {
+  var _ref,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.SectionModel = (function(_super) {
     __extends(SectionModel, _super);
 
     function SectionModel() {
-      _ref1 = SectionModel.__super__.constructor.apply(this, arguments);
-      return _ref1;
+      _ref = SectionModel.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     SectionModel.prototype.defaults = {
@@ -184,15 +190,22 @@
 
   })(Backbone.Model);
 
-  SectionsCollection = (function(_super) {
+}).call(this);
+
+(function() {
+  var _ref,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.SectionsCollection = (function(_super) {
     __extends(SectionsCollection, _super);
 
     function SectionsCollection() {
-      _ref2 = SectionsCollection.__super__.constructor.apply(this, arguments);
-      return _ref2;
+      _ref = SectionsCollection.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
-    SectionsCollection.prototype.model = SectionModel;
+    SectionsCollection.prototype.model = app.SectionModel;
 
     SectionsCollection.prototype.save = function() {
       return localStorage.presenterSections = JSON.stringify(this.toJSON());
@@ -206,12 +219,19 @@
 
   })(Backbone.Collection);
 
-  Section = (function(_super) {
+}).call(this);
+
+(function() {
+  var _ref,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.Section = (function(_super) {
     __extends(Section, _super);
 
     function Section() {
-      _ref3 = Section.__super__.constructor.apply(this, arguments);
-      return _ref3;
+      _ref = Section.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Section.prototype.className = 'section';
@@ -244,8 +264,8 @@
     };
 
     Section.prototype.render = function() {
-      var caption, type, value, _ref4;
-      _ref4 = this.model.toJSON(), value = _ref4.value, type = _ref4.type, caption = _ref4.caption;
+      var caption, type, value, _ref1;
+      _ref1 = this.model.toJSON(), value = _ref1.value, type = _ref1.type, caption = _ref1.caption;
       if (type === 'image') {
         if (value.indexOf("<img src=") === -1) {
           value = "<img src=\"" + value + "\">";
@@ -265,13 +285,21 @@
 
   })(Backbone.View);
 
-  Sections = (function(_super) {
+}).call(this);
+
+(function() {
+  var _ref,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  app.Sections = (function(_super) {
     __extends(Sections, _super);
 
     function Sections() {
       this.changeOrder = __bind(this.changeOrder, this);
-      _ref4 = Sections.__super__.constructor.apply(this, arguments);
-      return _ref4;
+      _ref = Sections.__super__.constructor.apply(this, arguments);
+      return _ref;
     }
 
     Sections.prototype.el = '.sections';
@@ -308,7 +336,7 @@
 
     Sections.prototype.addChild = function(section) {
       var sectionView;
-      sectionView = new Section({
+      sectionView = new app.Section({
         model: section
       });
       return this.$el.append(sectionView.render().el);
@@ -351,9 +379,16 @@
 
   })(Backbone.View);
 
-  app = {};
+}).call(this);
 
-  app.init = function() {
+(function() {
+  window.log = function() {
+    if (this.console && this.console.log) {
+      return console.log.apply(console, Array.prototype.slice.call(arguments));
+    }
+  };
+
+  $(function() {
     var appView, sections;
     $('body').removeClass('dragenter dragover');
     $('.page-scroll').scroll(function() {
@@ -367,25 +402,9 @@
     if (localStorage['presenterSections']) {
       sections = JSON.parse(localStorage.presenterSections);
     }
-    return appView = new App({
-      collection: new SectionsCollection(sections)
+    return appView = new app.AppView({
+      collection: new app.SectionsCollection(sections)
     });
-  };
-
-  app.saveExport = function() {
-    document.body.classList.add('capturing');
-    return setTimeout(function() {
-      chrome.runtime.sendMessage({
-        type: 'screenshot'
-      });
-      return setTimeout(function() {
-        return document.body.classList.remove('capturing');
-      }, 0);
-    }, 300);
-  };
-
-  $(function() {
-    return app.init();
   });
 
 }).call(this);
