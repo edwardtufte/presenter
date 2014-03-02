@@ -197,9 +197,11 @@ body.dragover .drag-helper
     text-align: center
     width: 100%
 
+.add
+    text-align: center
+
 .add-section
-    margin: 20px auto
-    width: 200px
+    +inline-block
     cursor: pointer
     padding: 20px
     background: red
@@ -207,7 +209,7 @@ body.dragover .drag-helper
     text-align: center
 
     &:before
-        content: "Add content"
+        content: "Add " attr(data-type)
         text-transform: uppercase
 
 body.section-focused

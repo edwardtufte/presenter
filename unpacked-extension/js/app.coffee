@@ -55,9 +55,17 @@ class App extends Backbone.View
         e.preventDefault()
         return false
 
-    addSection: ->
-        @collection.add
-            value: '<p>New paragraph...</p>'
+    addSection: (e) ->
+        sectionType = $(e.target).data('type')
+
+        if sectionType is 'text'
+            @collection.add
+                value: '<p>New paragraph...</p>'
+
+        if sectionType is 'header'
+            @collection.add
+                type: 'header'
+                value: '<h1>Headline</h1>'
 
     makeGraph: (columns, data) ->
         margin =

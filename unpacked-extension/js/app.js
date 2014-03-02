@@ -79,10 +79,20 @@
       e.preventDefault();
       return false;
     };
-    App.prototype.addSection = function() {
-      return this.collection.add({
-        value: '<p>New paragraph...</p>'
-      });
+    App.prototype.addSection = function(e) {
+      var sectionType;
+      sectionType = $(e.target).data('type');
+      if (sectionType === 'text') {
+        this.collection.add({
+          value: '<p>New paragraph...</p>'
+        });
+      }
+      if (sectionType === 'header') {
+        return this.collection.add({
+          type: 'header',
+          value: '<h1>Headline</h1>'
+        });
+      }
     };
     App.prototype.makeGraph = function(columns, data) {
       var height, line, margin, svg, width, x, xAxis, y, yAxis, yDomain;

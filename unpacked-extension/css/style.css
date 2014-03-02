@@ -170,16 +170,23 @@ body.dragover .drag-helper {
   text-align: center;
   width: 100%; }
 
+.add {
+  text-align: center; }
+
 .add-section {
-  margin: 20px auto;
-  width: 200px;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
   cursor: pointer;
   padding: 20px;
   background: red;
   color: white;
   text-align: center; }
   .add-section:before {
-    content: "Add content";
+    content: "Add " attr(data-type);
     text-transform: uppercase; }
 
 body.section-focused .section:not(.section-focused) {
