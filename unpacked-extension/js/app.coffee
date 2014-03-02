@@ -15,15 +15,21 @@ class App extends Backbone.View
 class Section extends Backbone.View
     className: 'section'
     events:
-        'focus': 'addFocus'
-        'blur': 'removeFocus'
+        'focus .section-content': 'addFocus'
+        'focus .section-caption': 'addFocus'
+
+        'blur .section-content': 'removeFocus'
+        'blur .section-caption': 'removeFocus'
+
         'click .section-delete': 'handleDelete'
 
     addFocus: ->
         $('body').addClass('section-focused')
+        @$el.addClass('section-focused')
 
     removeFocus: ->
         $('body').removeClass('section-focused')
+        @$el.removeClass('section-focused')
 
     render: ->
         {value, type, caption} = @model.toJSON()
@@ -68,7 +74,7 @@ class Sections extends Backbone.View
         @
 
     postRender: ->
-        new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
+        new MediumEditor '.section[data-type="text"] .section-content, .section[data-type="header"] .section-content, .section .section-caption',
             buttons: ['bold', 'italic', 'quote']
             firstHeader: 'h1'
             secondHeader: 'h2'

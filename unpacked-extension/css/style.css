@@ -29,13 +29,11 @@ body {
   margin-top: -1px; }
   .section .section-content {
     margin-left: 150px; }
-  .section:hover {
+  .section:hover, .section.section-focused {
     border-color: red;
     box-shadow: 0 0 0 2px red; }
-  .section[contenteditable]:focus {
-    outline: none;
-    border-color: red;
-    box-shadow: 0 0 0 2px red; }
+    .section:hover .section-content:focus, .section:hover .section-caption:focus, .section.section-focused .section-content:focus, .section.section-focused .section-caption:focus {
+      outline: none; }
   .section:first-child {
     border-top-width: 0; }
   .section:last-child {
@@ -170,9 +168,9 @@ body.dragover .drag-helper {
     content: "Add content";
     text-transform: uppercase; }
 
-body.section-focused .section:not(:focus) {
+body.section-focused .section:not(.section-focused) {
   opacity: 0.3; }
-  body.section-focused .section:not(:focus):hover {
+  body.section-focused .section:not(.section-focused):hover {
     opacity: 1; }
 
 .axis path, .axis line {

@@ -35,14 +35,14 @@ body
     .section-content
         margin-left: 150px
 
-    &:hover
+    &:hover, &.section-focused
         border-color: red
         box-shadow: 0 0 0 2px red
 
-    &[contenteditable]:focus
-        outline: none
-        border-color: red
-        box-shadow: 0 0 0 2px red
+        .section-content, .section-caption
+
+            &:focus
+                outline: none
 
     &:first-child
         border-top-width: 0
@@ -189,7 +189,7 @@ body.dragover .drag-helper
 
 body.section-focused
 
-    .section:not(:focus)
+    .section:not(.section-focused)
         opacity: 0.3
 
         &:hover
