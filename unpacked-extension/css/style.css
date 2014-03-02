@@ -112,12 +112,12 @@ body {
 .section:hover .section-caption.medium-editor-placeholder:after {
   opacity: 0.5; }
 
-.section[data-type="image"] {
+.section[data-type="image"] .section-content {
   text-align: center; }
-  .section[data-type="image"] img {
+  .section[data-type="image"] .section-content img {
     max-width: 100%; }
 
-.section[data-type="text"] .section-content {
+.section[data-type="text"] .section-content, .section[data-type="image"] .section-content {
   width: 500px;
   max-width: 100%; }
 
