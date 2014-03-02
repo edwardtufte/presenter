@@ -166,8 +166,12 @@ class SectionModel extends Backbone.Model
 
 class SectionsCollection extends Backbone.Collection
     model: SectionModel
+
     save: ->
         localStorage.presenterSections = JSON.stringify(@toJSON())
+
+    comparator: (model) ->
+        model.get('order')
 
 class Section extends Backbone.View
     className: 'section'
@@ -198,20 +202,22 @@ class Section extends Backbone.View
         if type is 'image'
             value = """<img src="#{ value }">"""
 
-        @$el.attr('data-type', type).html("""
-            <div class="section-inner">
-                <div class="section-helpers">
-                    <div class="section-drag-handle"></div>
-                    <div class="section-delete"></div>
+        @$el.attr('data-type', type)
+            .attr('data-cid', @model.cid)
+            .html("""
+                <div class="section-inner">
+                    <div class="section-helpers">
+                        <div class="section-drag-handle"></div>
+                        <div class="section-delete"></div>
+                    </div>
+                    <div class="section-content">
+                        #{ value }
+                    </div>
+                    <div class="section-caption">
+                        #{ caption }
+                    </div>
                 </div>
-                <div class="section-content">
-                    #{ value }
-                </div>
-                <div class="section-caption">
-                    #{ caption }
-                </div>
-            </div>
-        """)
+            """)
         @
 
     handleDelete: (e) ->
@@ -221,13 +227,26 @@ class Section extends Backbone.View
 
 class Sections extends Backbone.View
     el: '.sections'
+    events:
+        'sortupdate': 'changeOrder'
+
+    changeOrder: (e) =>
+        @$('.section').each (i, section) =>
+            $section = $(section)
+            cid = $section.attr('data-cid')
+            model = @collection.get(cid)
+            if model
+                model.set 'order', i
+
+        @collection.sort()
+
     initialize: ->
         @listenTo @collection, 'add', (section) ->
             @collection.save()
             @addChild(section)
             @postRender()
 
-        @listenTo @collection, 'change remove', (section) =>
+        @listenTo @collection, 'change remove sort', (section) =>
             @collection.save()
 
     addChild: (section) ->
