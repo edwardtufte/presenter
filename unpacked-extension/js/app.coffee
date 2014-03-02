@@ -57,7 +57,6 @@ class App extends Backbone.View
 
     addSection: ->
         @collection.add
-            type: 'text'
             value: '<p>New paragraph...</p>'
 
     makeGraph: (columns, data) ->
@@ -150,6 +149,15 @@ class App extends Backbone.View
         @collection.add
             type: 'graph'
             value: "<div class='chart'>#{html + graphHtml}</div>"
+
+class SectionModel extends Backbone.Model
+    defaults:
+        type: 'text'
+        caption: ''
+        value: ''
+
+class SectionsCollection extends Backbone.Collection
+    model: SectionModel
 
 class Section extends Backbone.View
     className: 'section'
@@ -338,7 +346,7 @@ app.init = ->
     $('.page-scroll').scroll -> $('body').scroll()
 
     appView = new App
-        collection: new Backbone.Collection(_sections)
+        collection: new SectionsCollection(_sections)
 
 app.saveExport = ->
     document.body.classList.add('capturing')
