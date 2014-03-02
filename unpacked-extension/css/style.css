@@ -29,10 +29,12 @@ body {
     border-top-width: 0; }
   .section:last-child {
     border-bottom-width: 0; }
-  .section.ui-sortable-helper:first-child {
-    border-top-width: 1px; }
-  .section.ui-sortable-helper:last-child {
-    border-bottom-width: 1px; }
+  .section.ui-sortable-helper {
+    background: rgba(255, 255, 243, 0.8); }
+    .section.ui-sortable-helper:first-child {
+      border-top-width: 1px; }
+    .section.ui-sortable-helper:last-child {
+      border-bottom-width: 1px; }
   .section .section-helpers {
     display: none; }
     .section .section-helpers .section-drag-handle {
