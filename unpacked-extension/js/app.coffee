@@ -15,6 +15,10 @@ app.sections = [{
         <p><font size="+1"><b><i>Diluting Perceptual Cluster/Streak Bias:
         Informal, Inline, Interocular Trauma Tests</i></b></font>
         </p>
+    '''
+},{
+    type: 'text'
+    value: '''
         <p>
         When people look at random number tables, they sees all kinds of clusters
         and streaks (in a completely random set of data). Similarly, when people are
