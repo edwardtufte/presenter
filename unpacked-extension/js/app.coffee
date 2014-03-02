@@ -53,7 +53,14 @@ class Sections extends Backbone.View
             axis: 'y'
             start: (e, ui) ->
                 ui.placeholder.height ui.helper.height()
-      @
+
+        $('.section').on 'focus', ->
+            $('body').addClass('section-focused')
+
+        $('.section').on 'blur', ->
+            $('body').removeClass('section-focused')
+
+        @
 
 _sections = [{
     type: 'header'
@@ -315,12 +322,6 @@ app.render = ->
         collection: app.sections
 
     app.view.render()
-
-    $('.section').on 'focus', ->
-        $('body').addClass('section-focused')
-
-    $('.section').on 'blur', ->
-        $('body').removeClass('section-focused')
 
 app.setupAddSectionButton = ->
     $('.add-section').click ->
