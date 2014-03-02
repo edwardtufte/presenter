@@ -186,7 +186,9 @@ class Section extends Backbone.View
             <div class="section-content">
                 #{ value }
             </div>
-            #{ if caption then "<div class='section-caption'>#{ caption }</div>" else ''}
+            <div class="section-caption">
+                #{ caption }
+            </div>
         """)
         @
 
