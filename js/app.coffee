@@ -58,17 +58,9 @@ class App extends Backbone.View
         e.preventDefault()
         return false
 
-    addSection: (e) ->
-        sectionType = $(e.target).data('type')
-
-        if sectionType is 'text'
-            @collection.add
-                value: '<p>New paragraph...</p>'
-
-        if sectionType is 'header'
-            @collection.add
-                type: 'header'
-                value: '<h1>Headline</h1>'
+    addSection: ->
+        @collection.add
+            value: '<p>Content...</p>'
 
     makeGraph: (columns, data) ->
         margin =
@@ -212,8 +204,8 @@ class Section extends Backbone.View
             .html("""
                 <div class="section-inner">
                     <div class="section-helpers">
-                        <div class="section-drag-handle button"></div>
-                        <div class="section-delete button"></div>
+                        <div class="section-drag-handle"></div>
+                        <div class="section-delete"></div>
                     </div>
                     <div class="section-content">
                         #{ value }
