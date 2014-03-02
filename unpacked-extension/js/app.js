@@ -276,12 +276,19 @@
     };
 
     Sections.prototype.postRender = function() {
-      new MediumEditor('.section[data-type="text"] .section-content, .section[data-type="header"] .section-content, .section .section-caption', {
+      var mediumOptions;
+      mediumOptions = {
         buttons: ['bold', 'italic', 'quote'],
         firstHeader: 'h1',
         secondHeader: 'h2',
         targetBlank: true
-      });
+      };
+      new MediumEditor('.section[data-type="text"] .section-content, .section[data-type="header"] .section-content', $.extend({}, mediumOptions, {
+        placeholder: 'Add text...'
+      }));
+      new MediumEditor('.section .section-caption', $.extend({}, mediumOptions, {
+        placeholder: 'Add a caption...'
+      }));
       $('.sections').sortable({
         handle: '.section-drag-handle',
         axis: 'y',
