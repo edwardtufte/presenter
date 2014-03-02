@@ -2,7 +2,59 @@ window.log = -> console.log.apply console, Array::slice.call(arguments) if @cons
 
 app = {}
 
-app.sections = new Backbone.Collection([{
+class Section extends Backbone.View
+    className: 'section'
+    render: ->
+        {value, type} = @model.toJSON()
+
+        if type is 'image'
+            value = """<img src="#{ value }">"""
+
+        @$el.attr('data-type', type).html("""
+            <div class="section-helpers">
+                <div class="section-drag-handle"></div>
+            </div>
+            <div class="section-content">
+                #{ value }
+            </div>
+        """)
+        @
+
+class Sections extends Backbone.View
+    el: '.sections'
+    children: []
+    initialize: ->
+        @listenTo @collection, 'add', (section) ->
+            @addChild(section)
+
+    addChild: (section) ->
+        sectionView = new Section
+            model: section
+        @$el.append(sectionView.render().el)
+        @children.push sectionView
+
+    render: ->
+        @collection.each (section) =>
+            @addChild(section)
+
+        @postRender()
+        @
+
+    postRender: ->
+        editor = new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
+            buttons: ['bold', 'italic', 'quote']
+            firstHeader: 'h1'
+            secondHeader: 'h2'
+            targetBlank: true
+
+        $('.sections').sortable
+            handle: '.section-drag-handle'
+            axis: 'y'
+            start: (e, ui) ->
+                ui.placeholder.height ui.helper.height()
+      @
+
+_sections = [{
     type: 'header'
     value: '''
         <h1>Sparkline theory and practice Edward Tufte</h1>
@@ -100,7 +152,7 @@ power of the eye enables it to differentiate to 0.1 mm where provoked to
 do so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies
 60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>
     '''
-}])
+}]
 
 app.init = ->
     # app.setupImageListener()
@@ -204,36 +256,30 @@ app.makeTable = (data) ->
         type: 'graph'
         value: "<div class='chart'>#{html + graphHtml}</div>"
 
-    app.render()
-
 app.setupDragAndDropListener = ->
     document.body.ondrop = (e) ->
         if e?.dataTransfer?.files?.length > 0
             onload = (e) ->
                 try
-                    data = d3.csv.parseRows(atob(e.target.result.slice(21)))
-                    app.makeTable(data)
-                    $('body').removeClass('dragenter dragover')
+                    if file.type is 'text/csv'
+                        data = d3.csv.parseRows(atob(e.target.result.slice(21)))
+                        app.makeTable(data)
+                    else if file.type?.split('\/')?[0].toLowerCase() is 'image'
+                        app.sections.add
+                            type: 'image'
+                            value: e.target.result
+
                 catch error
                     console.error(e, error)
+
+                $('body').removeClass('dragenter dragover')
 
             files = e.dataTransfer.files
 
             for file in files
-                if file.type is 'text/csv'
-                    reader = new FileReader()
-                    reader.onload = onload
-                    reader.readAsDataURL(file)
-
-                if file.type?.split('\/')?[0].toLowerCase() is 'image'
-                    reader = new FileReader()
-                    reader.onload = (e) ->
-                        app.sections.add {
-                            type: 'image'
-                            value: e.target.result
-                        }
-                        app.render()
-                    reader.readAsDataURL(file)
+                reader = new FileReader()
+                reader.onload = onload
+                reader.readAsDataURL(file)
 
         e.preventDefault()
         return false
@@ -261,41 +307,13 @@ app.setupDragAndDropListener = ->
 
 app.render = ->
     $('body').removeClass('dragenter dragover')
-
-    html = ''
-    app.sections.each (section) ->
-        {value, type} = section.toJSON()
-
-        if type is 'image'
-            value = """<img src="#{ section.value }">"""
-
-        html += """
-            <div class="section" data-type="#{ type }">
-                <div class="section-helpers">
-                    <div class="section-drag-handle"></div>
-                </div>
-                <div class="section-content">
-                    #{ value }
-                </div>
-                #{ if section.caption then "<div class='section-caption'>#{ section.caption }</div>" else ''}
-            </div>
-        """
-
-    $('.sections').html(html)
-
-    editor = new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
-        buttons: ['bold', 'italic', 'quote']
-        firstHeader: 'h1'
-        secondHeader: 'h2'
-        targetBlank: true
-
-    $('.sections').sortable
-        handle: '.section-drag-handle'
-        axis: 'y'
-        start: (e, ui) ->
-            ui.placeholder.height ui.helper.height()
-
     $('.page-scroll').scroll -> $('body').scroll()
+
+    app.sections = new Backbone.Collection(_sections)
+    app.view = new Sections
+        collection: app.sections
+
+    app.view.render()
 
     $('.section').on 'focus', ->
         $('body').addClass('section-focused')
