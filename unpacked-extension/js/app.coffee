@@ -214,26 +214,35 @@ app.setupDragAndDropListener = ->
                     reader.onload = onload
                     reader.readAsDataURL(file)
 
+                if file.type?.split('\/')?[0].toLowerCase() is 'image'
+                    reader = new FileReader()
+                    reader.onload = (e) ->
+                        app.sections.push {
+                            type: 'image'
+                            value: e.target.result
+                        }
+                        app.render()
+                    reader.readAsDataURL(file)
+
+        e.preventDefault()
+        return false
+
         e.preventDefault()
         return false
 
     document.body.mouseup = (e) ->
-        log 'asdasdas'
         $('body').removeClass('dragenter dragover')
 
     document.body.ondragleave = (e) ->
-        log 'asdasdasasdasd'
         $('body').removeClass('dragenter dragover')
 
     document.body.ondragenter = (e) ->
-        log 'asda'
         $('body').addClass('dragenter')
         e.dataTransfer.dropEffect = 'move'
         e.preventDefault()
         return false
 
     document.body.ondragover = (e) ->
-        log 'asdaasdasdasdasdasdasdsd'
         $('body').addClass('dragover')
         e.dataTransfer.dropEffect = 'move'
         e.preventDefault()

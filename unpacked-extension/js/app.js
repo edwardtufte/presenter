@@ -104,7 +104,7 @@
   };
   app.setupDragAndDropListener = function() {
     document.body.ondrop = function(e) {
-      var file, files, onload, reader, _i, _len, _ref, _ref2;
+      var file, files, onload, reader, _i, _len, _ref, _ref2, _ref3, _ref4;
       if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref2 = _ref.files) != null ? _ref2.length : void 0 : void 0 : void 0) > 0) {
         onload = function(e) {
           var data;
@@ -124,28 +124,37 @@
             reader.onload = onload;
             reader.readAsDataURL(file);
           }
+          if (((_ref3 = file.type) != null ? (_ref4 = _ref3.split('\/')) != null ? _ref4[0].toLowerCase() : void 0 : void 0) === 'image') {
+            reader = new FileReader();
+            reader.onload = function(e) {
+              app.sections.push({
+                type: 'image',
+                value: e.target.result
+              });
+              return app.render();
+            };
+            reader.readAsDataURL(file);
+          }
         }
       }
       e.preventDefault();
       return false;
+      e.preventDefault();
+      return false;
     };
     document.body.mouseup = function(e) {
-      log('asdasdas');
       return $('body').removeClass('dragenter dragover');
     };
     document.body.ondragleave = function(e) {
-      log('asdasdasasdasd');
       return $('body').removeClass('dragenter dragover');
     };
     document.body.ondragenter = function(e) {
-      log('asda');
       $('body').addClass('dragenter');
       e.dataTransfer.dropEffect = 'move';
       e.preventDefault();
       return false;
     };
     return document.body.ondragover = function(e) {
-      log('asdaasdasdasdasdasdasdsd');
       $('body').addClass('dragover');
       e.dataTransfer.dropEffect = 'move';
       e.preventDefault();
