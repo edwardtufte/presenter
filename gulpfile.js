@@ -19,6 +19,10 @@
     return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(coffee()).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
   });
 
+  gulp.task('plugins', function() {
+    return gulp.src(['./js/jquery.js', './js/jquery-ui.js', './js/underscore.js', './js/backbone.js', './js/d3.js', './js/medium-editor.js']).pipe(concat("plugins.js")).pipe(gulp.dest('./js/'));
+  });
+
   gulp.task('stylus', function() {
     return gulp.src('./styl/index.styl').pipe(stylus({
       use: ['nib']
@@ -32,7 +36,7 @@
   });
 
   gulp.task('default', function() {
-    gulp.run('coffee', 'stylus', 'jade');
+    gulp.run('coffee', 'stylus', 'jade', 'plugins');
     gulp.watch('./coffee/*', function() {
       return gulp.run('coffee');
     });

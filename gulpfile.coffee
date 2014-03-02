@@ -16,9 +16,20 @@ gulp.task 'coffee', ->
     './coffee/SectionCollection.coffee'
     './coffee/SectionView.coffee'
     './coffee/SectionsView.coffee'
-    './coffee/app.coffee']
-  ).pipe(coffee())
+    './coffee/app.coffee'
+  ]).pipe(coffee())
     .pipe(concat("app.js"))
+    .pipe(gulp.dest('./js/'))
+
+gulp.task 'plugins', ->
+  gulp.src([
+    './js/jquery.js'
+    './js/jquery-ui.js'
+    './js/underscore.js'
+    './js/backbone.js'
+    './js/d3.js'
+    './js/medium-editor.js'
+  ]).pipe(concat("plugins.js"))
     .pipe(gulp.dest('./js/'))
 
 gulp.task 'stylus', ->
@@ -33,7 +44,7 @@ gulp.task 'jade', ->
 
 gulp.task 'default', ->
 
-  gulp.run 'coffee', 'stylus', 'jade'
+  gulp.run 'coffee', 'stylus', 'jade', 'plugins'
 
   gulp.watch './coffee/*', ->
     gulp.run 'coffee'
