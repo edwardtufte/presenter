@@ -89,6 +89,7 @@ do so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per 
 app.init = ->
     # app.setupImageListener()
     app.setupDragAndDropListener()
+    app.setupAddSectionButton()
     app.render()
 
 app.setupImageListener = ->
@@ -267,6 +268,14 @@ app.render = ->
             ui.placeholder.height ui.helper.height()
 
     $('.page-scroll').scroll -> $('body').scroll()
+
+app.setupAddSectionButton = ->
+    $('.add-section').click ->
+        app.sections.push {
+            type: 'text'
+            value: '<p>New paragraph...</p>'
+        }
+        app.render()
 
 app.saveExport = ->
     document.body.classList.add('capturing')
