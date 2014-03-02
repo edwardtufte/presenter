@@ -96,45 +96,147 @@ app.setupImageListener = ->
         # app.addImages(request.urls)
         log request.urls
 
+app.makeGraph = (columns, data) ->
+    margin =
+        top: 20
+        right: 20
+        bottom: 30
+        left: 50
+
+    width = 600 - margin.left - margin.right
+    height = 300 - margin.top - margin.bottom
+
+    yDomain = d3.extent(data, (d) -> d[1])
+    if yDomain[0] < 0
+        yDomain[1] = 0
+    else
+        yDomain[0] = 0
+
+    x = d3.scale.linear()
+        .domain(d3.extent(data, (d) -> return d[0] ))
+        .range([0, width])
+
+    y = d3.scale.linear()
+        .domain(yDomain)
+        .range([height, 0])
+
+    xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
+
+    yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+
+    line = d3.svg.line()
+        .x( (d) -> return x(d[0]) )
+        .y( (d) -> return y(d[1]) )
+
+    svg = d3.select(document.createElement("svg"))
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(#{margin.left},#{margin.top})")
+
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0,#{height})")
+      .call(xAxis)
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text(columns[1]);
+
+    svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line)
+
+    return "<svg>#{svg.html()}</svg>"
+
+app.makeTable = (data) ->
+    columns = data.shift()
+    rows = data
+    html = "<table><thead><tr>"
+
+    for column in columns
+        html += "<th>" + column + "</th>"
+
+    html += '</tr></thead><tbody>'
+
+    for row in rows
+        html += "<tr>";
+
+        for column in row
+            html += "<td>" + column + "</td>"
+
+        html += "</tr>"
+
+    html += '</tbody></table>'
+
+    graphHtml = app.makeGraph(columns, rows)
+
+    app.sections.push
+        type: 'graph'
+        value: html + graphHtml
+
+    app.render()
+
 app.setupDragAndDropListener = ->
     document.body.ondrop = (e) ->
-        log 'asd'
-        if e.dataTransfer and e.dataTransfer.files and e.dataTransfer.files.length
-            files = e.dataTransfer.files
-            for file in files
-                if file.type?.split('\/')?[0].toLowerCase() is 'image'
-                    reader = new FileReader()
-                    reader.onload = (e) ->
-                        log e.target.result
+        if e?.dataTransfer?.files?.length > 0
+            onload = (e) ->
+                try
+                    data = d3.csv.parseRows(atob(e.target.result.slice(21)))
+                    app.makeTable(data)
+                    $('body').removeClass('dragenter dragover')
+                catch error
+                    console.error(e, error)
 
+            files = e.dataTransfer.files
+
+            for file in files
+                if file.type is 'text/csv'
+                    reader = new FileReader()
+                    reader.onload = onload
                     reader.readAsDataURL(file)
+
         e.preventDefault()
         return false
 
-        document.body.mouseup = (e) ->
-            log 'asdasdas'
-            $('body').removeClass('dragenter dragover')
+    document.body.mouseup = (e) ->
+        log 'asdasdas'
+        $('body').removeClass('dragenter dragover')
 
-        document.body.ondragleave = (e) ->
-            log 'asdasdasasdasd'
-            $('body').removeClass('dragenter dragover')
+    document.body.ondragleave = (e) ->
+        log 'asdasdasasdasd'
+        $('body').removeClass('dragenter dragover')
 
-        document.body.ondragenter = (e) ->
-            log 'asda'
-            $('body').addClass('dragenter')
-            e.dataTransfer.dropEffect = 'move'
-            e.preventDefault()
-            return false
+    document.body.ondragenter = (e) ->
+        log 'asda'
+        $('body').addClass('dragenter')
+        e.dataTransfer.dropEffect = 'move'
+        e.preventDefault()
+        return false
 
-        document.body.ondragover = (e) ->
-            log 'asdaasdasdasdasdasdasdsd'
-            $('body').addClass('dragover')
-            e.dataTransfer.dropEffect = 'move'
-            e.preventDefault()
-            return false
+    document.body.ondragover = (e) ->
+        log 'asdaasdasdasdasdasdasdsd'
+        $('body').addClass('dragover')
+        e.dataTransfer.dropEffect = 'move'
+        e.preventDefault()
+        return false
 
 app.render = ->
     $('body').removeClass('dragenter dragover')
+
+    $('.sections').empty()
 
     for section in app.sections
         html = section.value

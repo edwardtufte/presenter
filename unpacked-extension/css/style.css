@@ -113,3 +113,17 @@ body.dragover .drag-helper {
   font-size: 28px;
   text-align: center;
   width: 100%; }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges; }
+
+.x.axis path {
+  display: none; }
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px; }
