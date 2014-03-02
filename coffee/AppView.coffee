@@ -21,12 +21,14 @@ class app.AppView extends Backbone.View
                     if file.type in ['text/csv', 'text/plain']
                         b64Data = e.target.result.split('base64,')
                         if b64Data.length is 2
-                            data = d3.csv.parseRows(atob(b64Data[1]))
-                            if data?.length is 1 and data[0].length is 1
-                                @collection.add
-                                    value: data[0][0]
-                            else
+                            data = atob(b64Data[1])
+                            if '.csv' in file.name or file.type is 'text/csv'
+                                data = d3.csv.parseRows(data)
                                 @makeTable(data)
+                            else
+                                @collection.add
+                                    value: data
+
 
                     else if file.type?.split('\/')?[0].toLowerCase() is 'image'
                         @collection.add
