@@ -18,22 +18,23 @@ class App extends Backbone.View
     onDrop: (e) =>
         e = e.originalEvent
         if e?.dataTransfer?.files?.length > 0
-            onload = (e) =>
-                if file.type is 'text/csv'
-                    data = d3.csv.parseRows(atob(e.target.result.slice(21)))
-                    @makeTable(data)
-                else if file.type?.split('\/')?[0].toLowerCase() is 'image'
-                    @collection.add
-                        type: 'image'
-                        value: e.target.result
+            onload = (file) =>
+                return (e) =>
+                    if file.type is 'text/csv'
+                        data = d3.csv.parseRows(atob(e.target.result.slice(21)))
+                        @makeTable(data)
+                    else if file.type?.split('\/')?[0].toLowerCase() is 'image'
+                        @collection.add
+                            type: 'image'
+                            value: e.target.result
 
-                @$el.removeClass('dragenter dragover')
+                    @$el.removeClass('dragenter dragover')
 
             files = e.dataTransfer.files
 
             for file in files
                 reader = new FileReader()
-                reader.onload = onload
+                reader.onload = onload(file)
                 reader.readAsDataURL(file)
 
         e.preventDefault()

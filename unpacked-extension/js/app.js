@@ -43,25 +43,27 @@
       e = e.originalEvent;
       if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref1 = _ref.files) != null ? _ref1.length : void 0 : void 0 : void 0) > 0) {
         onload = (function(_this) {
-          return function(e) {
-            var data, _ref2, _ref3;
-            if (file.type === 'text/csv') {
-              data = d3.csv.parseRows(atob(e.target.result.slice(21)));
-              _this.makeTable(data);
-            } else if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
-              _this.collection.add({
-                type: 'image',
-                value: e.target.result
-              });
-            }
-            return _this.$el.removeClass('dragenter dragover');
+          return function(file) {
+            return function(e) {
+              var data, _ref2, _ref3;
+              if (file.type === 'text/csv') {
+                data = d3.csv.parseRows(atob(e.target.result.slice(21)));
+                _this.makeTable(data);
+              } else if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
+                _this.collection.add({
+                  type: 'image',
+                  value: e.target.result
+                });
+              }
+              return _this.$el.removeClass('dragenter dragover');
+            };
           };
         })(this);
         files = e.dataTransfer.files;
         for (_i = 0, _len = files.length; _i < _len; _i++) {
           file = files[_i];
           reader = new FileReader();
-          reader.onload = onload;
+          reader.onload = onload(file);
           reader.readAsDataURL(file);
         }
       }
