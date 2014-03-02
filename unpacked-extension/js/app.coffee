@@ -2,11 +2,28 @@ window.log = -> console.log.apply console, Array::slice.call(arguments) if @cons
 
 app = {}
 
+class App extends Backbone.View
+    el: 'body'
+    events:
+        'click .add-section': 'addSection'
+
+    addSection: ->
+        app.sections.add
+            type: 'text'
+            value: '<p>New paragraph...</p>'
+
 class Section extends Backbone.View
     className: 'section'
-
     events:
+        'focus': 'addFocus'
+        'blur': 'removeFocus'
         'click .section-delete': 'handleDelete'
+
+    addFocus: ->
+        $('body').addClass('section-focused')
+
+    removeFocus: ->
+        $('body').removeClass('section-focused')
 
     render: ->
         {value, type, caption} = @model.toJSON()
@@ -27,21 +44,21 @@ class Section extends Backbone.View
         @
 
     handleDelete: (e) ->
-        # @model.collection.remove(@model) # TODO - marc to implement
+        @model.destroy()
+        @remove()
         e.preventDefault()
 
 class Sections extends Backbone.View
     el: '.sections'
-    children: []
     initialize: ->
         @listenTo @collection, 'add', (section) ->
             @addChild(section)
+            @postRender()
 
     addChild: (section) ->
         sectionView = new Section
             model: section
         @$el.append(sectionView.render().el)
-        @children.push sectionView
 
     render: ->
         @collection.each (section) =>
@@ -51,7 +68,7 @@ class Sections extends Backbone.View
         @
 
     postRender: ->
-        editor = new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
+        new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
             buttons: ['bold', 'italic', 'quote']
             firstHeader: 'h1'
             secondHeader: 'h2'
@@ -62,12 +79,6 @@ class Sections extends Backbone.View
             axis: 'y'
             start: (e, ui) ->
                 ui.placeholder.height ui.helper.height()
-
-        $('.section').on 'focus', ->
-            $('body').addClass('section-focused')
-
-        $('.section').on 'blur', ->
-            $('body').removeClass('section-focused')
 
         @
 
@@ -174,7 +185,6 @@ do so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per 
 app.init = ->
     # app.setupImageListener()
     app.setupDragAndDropListener()
-    app.setupAddSectionButton()
     app.render()
 
 app.setupImageListener = ->
@@ -326,17 +336,13 @@ app.render = ->
     $('body').removeClass('dragenter dragover')
     $('.page-scroll').scroll -> $('body').scroll()
 
+    appView = new App
+
     app.sections = new Backbone.Collection(_sections)
     app.view = new Sections
         collection: app.sections
 
     app.view.render()
-
-app.setupAddSectionButton = ->
-    $('.add-section').click ->
-        app.sections.add
-            type: 'text'
-            value: '<p>New paragraph...</p>'
 
 app.saveExport = ->
     document.body.classList.add('capturing')

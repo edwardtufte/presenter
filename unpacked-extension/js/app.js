@@ -1,28 +1,63 @@
 (function() {
-  var Section, Sections, app, _sections;
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
-    for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
-    function ctor() { this.constructor = child; }
-    ctor.prototype = parent.prototype;
-    child.prototype = new ctor;
-    child.__super__ = parent.prototype;
-    return child;
-  }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var App, Section, Sections, app, _sections,
+    __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
   window.log = function() {
     if (this.console && this.console.log) {
       return console.log.apply(console, Array.prototype.slice.call(arguments));
     }
   };
+
   app = {};
-  Section = (function() {
-    __extends(Section, Backbone.View);
-    function Section() {
-      Section.__super__.constructor.apply(this, arguments);
+
+  App = (function(_super) {
+    __extends(App, _super);
+
+    function App() {
+      return App.__super__.constructor.apply(this, arguments);
     }
+
+    App.prototype.el = 'body';
+
+    App.prototype.events = {
+      'click .add-section': 'addSection'
+    };
+
+    App.prototype.addSection = function() {
+      return app.sections.add({
+        type: 'text',
+        value: '<p>New paragraph...</p>'
+      });
+    };
+
+    return App;
+
+  })(Backbone.View);
+
+  Section = (function(_super) {
+    __extends(Section, _super);
+
+    function Section() {
+      return Section.__super__.constructor.apply(this, arguments);
+    }
+
     Section.prototype.className = 'section';
+
     Section.prototype.events = {
+      'focus': 'addFocus',
+      'blur': 'removeFocus',
       'click .section-delete': 'handleDelete'
     };
+
+    Section.prototype.addFocus = function() {
+      return $('body').addClass('section-focused');
+    };
+
+    Section.prototype.removeFocus = function() {
+      return $('body').removeClass('section-focused');
+    };
+
     Section.prototype.render = function() {
       var caption, type, value, _ref;
       _ref = this.model.toJSON(), value = _ref.value, type = _ref.type, caption = _ref.caption;
@@ -32,41 +67,53 @@
       this.$el.attr('data-type', type).html("<div class=\"section-helpers\">\n    <div class=\"section-drag-handle\"></div>\n    <div class=\"section-delete\"></div>\n</div>\n<div class=\"section-content\">\n    " + value + "\n</div>\n" + (caption ? "<div class='section-caption'>" + caption + "</div>" : ''));
       return this;
     };
+
     Section.prototype.handleDelete = function(e) {
+      this.model.destroy();
+      this.remove();
       return e.preventDefault();
     };
+
     return Section;
-  })();
-  Sections = (function() {
-    __extends(Sections, Backbone.View);
+
+  })(Backbone.View);
+
+  Sections = (function(_super) {
+    __extends(Sections, _super);
+
     function Sections() {
-      Sections.__super__.constructor.apply(this, arguments);
+      return Sections.__super__.constructor.apply(this, arguments);
     }
+
     Sections.prototype.el = '.sections';
-    Sections.prototype.children = [];
+
     Sections.prototype.initialize = function() {
       return this.listenTo(this.collection, 'add', function(section) {
-        return this.addChild(section);
+        this.addChild(section);
+        return this.postRender();
       });
     };
+
     Sections.prototype.addChild = function(section) {
       var sectionView;
       sectionView = new Section({
         model: section
       });
-      this.$el.append(sectionView.render().el);
-      return this.children.push(sectionView);
+      return this.$el.append(sectionView.render().el);
     };
+
     Sections.prototype.render = function() {
-      this.collection.each(__bind(function(section) {
-        return this.addChild(section);
-      }, this));
+      this.collection.each((function(_this) {
+        return function(section) {
+          return _this.addChild(section);
+        };
+      })(this));
       this.postRender();
       return this;
     };
+
     Sections.prototype.postRender = function() {
-      var editor;
-      editor = new MediumEditor('.section[data-type="text"], .section[data-type="header"]', {
+      new MediumEditor('.section[data-type="text"], .section[data-type="header"]', {
         buttons: ['bold', 'italic', 'quote'],
         firstHeader: 'h1',
         secondHeader: 'h2',
@@ -79,16 +126,13 @@
           return ui.placeholder.height(ui.helper.height());
         }
       });
-      $('.section').on('focus', function() {
-        return $('body').addClass('section-focused');
-      });
-      $('.section').on('blur', function() {
-        return $('body').removeClass('section-focused');
-      });
       return this;
     };
+
     return Sections;
-  })();
+
+  })(Backbone.View);
+
   _sections = [
     {
       type: 'header',
@@ -114,16 +158,18 @@
       value: '<p>\nConsuming a horizontal length of only 14 letterspaces, each sparkline\nin the big table above provides a look at the price and the changes in\nprice for every day for years, and the overall time pattern. <i>This financial\ntable reports 24 numbers accurate to 5 significant digits; the accompanying\nsparklines show about 14,000 numbers readable from 1 to 2 significant digits.\nThe idea is to be approximately right rather than exactly wrong.</i>&nbsp;<font size="-1">1</font>\n</p>\n\n<p>By showing recent change in relation to many past changes, sparklines\nprovide a context for nuanced analysis—and, one hopes, better decisions.\nMoreover, the year-long daily history reduces <i>recency bias,</i> the persistent\nand widespread over-weighting of recent events in making decisions.\nTables sometimes reinforce recency bias by showing only current levels\nor recent changes; sparklines improve the attention span of tables.\n</p>\n\n<p>Tables of numbers attain maximum densities of only 300 characters per\nsquare inch or 50 characters per square centimeter. In contrast, graphical\ndisplays have far greater resolutions; a cartographer notes "the resolving\npower of the eye enables it to differentiate to 0.1 mm where provoked to\ndo so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies\n60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>'
     }
   ];
+
   app.init = function() {
     app.setupDragAndDropListener();
-    app.setupAddSectionButton();
     return app.render();
   };
+
   app.setupImageListener = function() {
     return chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       return log(request.urls);
     });
   };
+
   app.makeGraph = function(columns, data) {
     var height, line, margin, svg, width, x, xAxis, y, yAxis, yDomain;
     margin = {
@@ -159,8 +205,9 @@
     svg.append("path").datum(data).attr("class", "line").attr("d", line);
     return "<svg width=" + (width + margin.left + margin.right) + " height=" + (height + margin.top + margin.bottom) + ">" + (svg.html()) + "</svg>";
   };
+
   app.makeTable = function(data) {
-    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len2, _len3;
+    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len1, _len2;
     columns = data.shift();
     rows = data;
     html = "<table><thead><tr>";
@@ -169,10 +216,10 @@
       html += "<th>" + column + "</th>";
     }
     html += '</tr></thead><tbody>';
-    for (_j = 0, _len2 = rows.length; _j < _len2; _j++) {
+    for (_j = 0, _len1 = rows.length; _j < _len1; _j++) {
       row = rows[_j];
       html += "<tr>";
-      for (_k = 0, _len3 = row.length; _k < _len3; _k++) {
+      for (_k = 0, _len2 = row.length; _k < _len2; _k++) {
         column = row[_k];
         html += "<td>" + column + "</td>";
       }
@@ -185,23 +232,25 @@
       value: "<div class='chart'>" + (html + graphHtml) + "</div>"
     });
   };
+
   app.setupDragAndDropListener = function() {
     document.body.ondrop = function(e) {
-      var file, files, onload, reader, _i, _len, _ref, _ref2;
-      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref2 = _ref.files) != null ? _ref2.length : void 0 : void 0 : void 0) > 0) {
+      var file, files, onload, reader, _i, _len, _ref, _ref1;
+      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref1 = _ref.files) != null ? _ref1.length : void 0 : void 0 : void 0) > 0) {
         onload = function(e) {
-          var data, _ref3, _ref4;
+          var data, error, _ref2, _ref3;
           try {
             if (file.type === 'text/csv') {
               data = d3.csv.parseRows(atob(e.target.result.slice(21)));
               app.makeTable(data);
-            } else if (((_ref3 = file.type) != null ? (_ref4 = _ref3.split('\/')) != null ? _ref4[0].toLowerCase() : void 0 : void 0) === 'image') {
+            } else if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
               app.sections.add({
                 type: 'image',
                 value: e.target.result
               });
             }
-          } catch (error) {
+          } catch (_error) {
+            error = _error;
             console.error(e, error);
           }
           return $('body').removeClass('dragenter dragover');
@@ -238,25 +287,21 @@
       return false;
     };
   };
+
   app.render = function() {
+    var appView;
     $('body').removeClass('dragenter dragover');
     $('.page-scroll').scroll(function() {
       return $('body').scroll();
     });
+    appView = new App;
     app.sections = new Backbone.Collection(_sections);
     app.view = new Sections({
       collection: app.sections
     });
     return app.view.render();
   };
-  app.setupAddSectionButton = function() {
-    return $('.add-section').click(function() {
-      return app.sections.add({
-        type: 'text',
-        value: '<p>New paragraph...</p>'
-      });
-    });
-  };
+
   app.saveExport = function() {
     document.body.classList.add('capturing');
     return setTimeout(function() {
@@ -268,7 +313,9 @@
       }, 0);
     }, 300);
   };
+
   setTimeout(function() {
     return app.init();
   }, 0);
+
 }).call(this);
