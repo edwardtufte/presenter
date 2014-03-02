@@ -59,15 +59,15 @@ body {
   .section:hover .section-inner .section-content:focus, .section:hover .section-inner .section-caption:focus, .section.section-focused .section-inner .section-content:focus, .section.section-focused .section-inner .section-caption:focus {
     outline: none; }
 .section:first-child .section-inner {
-  border-top-width: 0; }
+  border-top-color: transparent; }
 .section:last-child .section-inner {
-  border-bottom-width: 0; }
+  border-bottom-color: transparent; }
 .section.ui-sortable-helper, .section:hover {
   background: rgba(255, 255, 243, 0.8); }
   .section.ui-sortable-helper:first-child .section-inner, .section:hover:first-child .section-inner {
-    border-top-width: 1px; }
+    border-top-color: red; }
   .section.ui-sortable-helper:last-child .section-inner, .section:hover:last-child .section-inner {
-    border-bottom-width: 1px; }
+    border-bottom-color: red; }
 .section .section-helpers {
   display: none;
   overflow: hidden;
