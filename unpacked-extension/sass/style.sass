@@ -141,11 +141,12 @@ body
         img
             max-width: 100%
 
-.section[data-type="text"], .section[data-type="image"]
+.section[data-type="text"], .section[data-type="image"], .section[data-type="graph"]
 
     .section-content
         width: 500px
         max-width: 100%
+        overflow: hidden
 
 .section[data-type="header"]
 
@@ -174,6 +175,11 @@ p
 
     &:last-child
         margin-bottom: 0
+
+table
+
+    th
+        font-weight: normal
 
 .drag-helper
     display: none
@@ -244,3 +250,4 @@ body.section-focused
         display: inline-block
         vertical-align: top
         margin-right: 25px
+        margin-bottom: 25px

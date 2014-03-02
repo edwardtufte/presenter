@@ -117,9 +117,10 @@ body {
   .section[data-type="image"] .section-content img {
     max-width: 100%; }
 
-.section[data-type="text"] .section-content, .section[data-type="image"] .section-content {
+.section[data-type="text"] .section-content, .section[data-type="image"] .section-content, .section[data-type="graph"] .section-content {
   width: 500px;
-  max-width: 100%; }
+  max-width: 100%;
+  overflow: hidden; }
 
 .section[data-type="header"] .section-caption {
   display: none; }
@@ -145,6 +146,9 @@ p {
   margin-bottom: 20px; }
   p:last-child {
     margin-bottom: 0; }
+
+table th {
+  font-weight: normal; }
 
 .drag-helper {
   display: none;
@@ -212,4 +216,5 @@ body.section-focused .section:not(.section-focused) {
 .chart table {
   display: inline-block;
   vertical-align: top;
-  margin-right: 25px; }
+  margin-right: 25px;
+  margin-bottom: 25px; }
