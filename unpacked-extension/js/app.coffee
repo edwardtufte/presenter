@@ -201,7 +201,7 @@ class Section extends Backbone.View
         {value, type, caption} = @model.toJSON()
 
         if type is 'image'
-            if not "<img src=" in value
+            if value.indexOf("<img src=") is -1
                 value = """<img src="#{ value }">"""
 
 
