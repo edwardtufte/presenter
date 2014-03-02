@@ -55,7 +55,8 @@ body
             border-bottom-width: 1px
 
     .section-helpers
-        display: none
+        height: 0
+        overflow: hidden
 
         .section-drag-handle
             +inline-block
@@ -63,7 +64,31 @@ body
             top: -1px
             left: 0
             opacity: 0
-            transition: opacity .4s
+            background: red
+            color: #fff
+            text-align: center
+            padding: 20px
+            cursor: move
+
+            &:before
+                content: "Reorder"
+                text-transform: uppercase
+
+        .section-delete
+            +inline-block
+            cursor: pointer
+            position: absolute
+            top: -1px
+            right: 0
+            opacity: 0
+            background: red
+            color: #fff
+            text-align: center
+            padding: 20px
+
+            &:before
+                content: "Remove"
+                text-transform: uppercase
 
     .section-caption
         font-size: 15px
@@ -75,19 +100,11 @@ body
     &:hover
 
         .section-helpers
-            display: block
+            height: auto
+            overflow: visible
 
-            .section-drag-handle
-                padding: 20px
+            .section-drag-handle, .section-delete
                 opacity: 1
-                background: red
-                color: #fff
-                text-align: center
-                cursor: move
-
-                &:before
-                    content: "Reorder"
-                    text-transform: uppercase
 
 .section[data-type="image"]
     text-align: center

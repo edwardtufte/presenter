@@ -4,6 +4,10 @@ app = {}
 
 class Section extends Backbone.View
     className: 'section'
+
+    events:
+        'click .section-delete': 'handleDelete'
+
     render: ->
         {value, type, caption} = @model.toJSON()
 
@@ -13,6 +17,7 @@ class Section extends Backbone.View
         @$el.attr('data-type', type).html("""
             <div class="section-helpers">
                 <div class="section-drag-handle"></div>
+                <div class="section-delete"></div>
             </div>
             <div class="section-content">
                 #{ value }
@@ -20,6 +25,10 @@ class Section extends Backbone.View
             #{ if caption then "<div class='section-caption'>#{ caption }</div>" else ''}
         """)
         @
+
+    handleDelete: (e) ->
+        # @model.collection.remove(@model) # TODO - marc to implement
+        e.preventDefault()
 
 class Sections extends Backbone.View
     el: '.sections'

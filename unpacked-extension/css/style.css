@@ -44,7 +44,8 @@ body {
     .section.ui-sortable-helper:last-child {
       border-bottom-width: 1px; }
   .section .section-helpers {
-    display: none; }
+    height: 0;
+    overflow: hidden; }
     .section .section-helpers .section-drag-handle {
       display: -moz-inline-stack;
       display: inline-block;
@@ -56,7 +57,33 @@ body {
       top: -1px;
       left: 0;
       opacity: 0;
-      transition: opacity 0.4s; }
+      background: red;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      cursor: move; }
+      .section .section-helpers .section-drag-handle:before {
+        content: "Reorder";
+        text-transform: uppercase; }
+    .section .section-helpers .section-delete {
+      display: -moz-inline-stack;
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align: auto;
+      zoom: 1;
+      *display: inline;
+      cursor: pointer;
+      position: absolute;
+      top: -1px;
+      right: 0;
+      opacity: 0;
+      background: red;
+      color: white;
+      text-align: center;
+      padding: 20px; }
+      .section .section-helpers .section-delete:before {
+        content: "Remove";
+        text-transform: uppercase; }
   .section .section-caption {
     font-size: 15px;
     width: 300px;
@@ -64,17 +91,10 @@ body {
     top: 20px;
     right: 0; }
   .section:hover .section-helpers {
-    display: block; }
-    .section:hover .section-helpers .section-drag-handle {
-      padding: 20px;
-      opacity: 1;
-      background: red;
-      color: white;
-      text-align: center;
-      cursor: move; }
-      .section:hover .section-helpers .section-drag-handle:before {
-        content: "Reorder";
-        text-transform: uppercase; }
+    height: auto;
+    overflow: visible; }
+    .section:hover .section-helpers .section-drag-handle, .section:hover .section-helpers .section-delete {
+      opacity: 1; }
 
 .section[data-type="image"] {
   text-align: center; }
