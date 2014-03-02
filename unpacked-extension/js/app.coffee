@@ -2,7 +2,7 @@ window.log = -> console.log.apply console, Array::slice.call(arguments) if @cons
 
 app = {}
 
-app.sections = [{
+app.sections = new Backbone.Collection([{
     type: 'header'
     value: '''
         <h1>Sparkline theory and practice Edward Tufte</h1>
@@ -100,7 +100,7 @@ power of the eye enables it to differentiate to 0.1 mm where provoked to
 do so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies
 60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>
     '''
-}]
+}])
 
 app.init = ->
     # app.setupImageListener()
@@ -200,7 +200,7 @@ app.makeTable = (data) ->
 
     graphHtml = app.makeGraph(columns, rows)
 
-    app.sections.push
+    app.sections.add
         type: 'graph'
         value: "<div class='chart'>#{html + graphHtml}</div>"
 
@@ -228,7 +228,7 @@ app.setupDragAndDropListener = ->
                 if file.type?.split('\/')?[0].toLowerCase() is 'image'
                     reader = new FileReader()
                     reader.onload = (e) ->
-                        app.sections.push {
+                        app.sections.add {
                             type: 'image'
                             value: e.target.result
                         }
@@ -262,24 +262,26 @@ app.setupDragAndDropListener = ->
 app.render = ->
     $('body').removeClass('dragenter dragover')
 
-    $('.sections').empty()
+    html = ''
+    app.sections.each (section) ->
+        {value, type} = section.toJSON()
 
-    for section in app.sections
-        html = section.value
-        if section.type is 'image'
-            html = """<img src="#{ section.value }">"""
+        if type is 'image'
+            value = """<img src="#{ section.value }">"""
 
-        $('.sections').append """
-            <div class="section" data-type="#{ section.type }">
+        html += """
+            <div class="section" data-type="#{ type }">
                 <div class="section-helpers">
                     <div class="section-drag-handle"></div>
                 </div>
                 <div class="section-content">
-                    #{ html }
+                    #{ value }
                 </div>
                 #{ if section.caption then "<div class='section-caption'>#{ section.caption }</div>" else ''}
             </div>
         """
+
+    $('.sections').html(html)
 
     editor = new MediumEditor '.section[data-type="text"], .section[data-type="header"]',
         buttons: ['bold', 'italic', 'quote']

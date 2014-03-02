@@ -1,12 +1,15 @@
 (function() {
   var app;
+
   window.log = function() {
     if (this.console && this.console.log) {
       return console.log.apply(console, Array.prototype.slice.call(arguments));
     }
   };
+
   app = {};
-  app.sections = [
+
+  app.sections = new Backbone.Collection([
     {
       type: 'header',
       value: '<h1>Sparkline theory and practice Edward Tufte</h1>'
@@ -30,17 +33,20 @@
       type: 'text',
       value: '<p>\nConsuming a horizontal length of only 14 letterspaces, each sparkline\nin the big table above provides a look at the price and the changes in\nprice for every day for years, and the overall time pattern. <i>This financial\ntable reports 24 numbers accurate to 5 significant digits; the accompanying\nsparklines show about 14,000 numbers readable from 1 to 2 significant digits.\nThe idea is to be approximately right rather than exactly wrong.</i>&nbsp;<font size="-1">1</font>\n</p>\n\n<p>By showing recent change in relation to many past changes, sparklines\nprovide a context for nuanced analysis—and, one hopes, better decisions.\nMoreover, the year-long daily history reduces <i>recency bias,</i> the persistent\nand widespread over-weighting of recent events in making decisions.\nTables sometimes reinforce recency bias by showing only current levels\nor recent changes; sparklines improve the attention span of tables.\n</p>\n\n<p>Tables of numbers attain maximum densities of only 300 characters per\nsquare inch or 50 characters per square centimeter. In contrast, graphical\ndisplays have far greater resolutions; a cartographer notes "the resolving\npower of the eye enables it to differentiate to 0.1 mm where provoked to\ndo so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies\n60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>'
     }
-  ];
+  ]);
+
   app.init = function() {
     app.setupDragAndDropListener();
     app.setupAddSectionButton();
     return app.render();
   };
+
   app.setupImageListener = function() {
     return chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
       return log(request.urls);
     });
   };
+
   app.makeGraph = function(columns, data) {
     var height, line, margin, svg, width, x, xAxis, y, yAxis, yDomain;
     margin = {
@@ -76,8 +82,9 @@
     svg.append("path").datum(data).attr("class", "line").attr("d", line);
     return "<svg width=" + (width + margin.left + margin.right) + " height=" + (height + margin.top + margin.bottom) + ">" + (svg.html()) + "</svg>";
   };
+
   app.makeTable = function(data) {
-    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len2, _len3;
+    var column, columns, graphHtml, html, row, rows, _i, _j, _k, _len, _len1, _len2;
     columns = data.shift();
     rows = data;
     html = "<table><thead><tr>";
@@ -86,10 +93,10 @@
       html += "<th>" + column + "</th>";
     }
     html += '</tr></thead><tbody>';
-    for (_j = 0, _len2 = rows.length; _j < _len2; _j++) {
+    for (_j = 0, _len1 = rows.length; _j < _len1; _j++) {
       row = rows[_j];
       html += "<tr>";
-      for (_k = 0, _len3 = row.length; _k < _len3; _k++) {
+      for (_k = 0, _len2 = row.length; _k < _len2; _k++) {
         column = row[_k];
         html += "<td>" + column + "</td>";
       }
@@ -97,23 +104,25 @@
     }
     html += '</tbody></table>';
     graphHtml = app.makeGraph(columns, rows);
-    app.sections.push({
+    app.sections.add({
       type: 'graph',
       value: "<div class='chart'>" + (html + graphHtml) + "</div>"
     });
     return app.render();
   };
+
   app.setupDragAndDropListener = function() {
     document.body.ondrop = function(e) {
-      var file, files, onload, reader, _i, _len, _ref, _ref2, _ref3, _ref4;
-      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref2 = _ref.files) != null ? _ref2.length : void 0 : void 0 : void 0) > 0) {
+      var file, files, onload, reader, _i, _len, _ref, _ref1, _ref2, _ref3;
+      if ((e != null ? (_ref = e.dataTransfer) != null ? (_ref1 = _ref.files) != null ? _ref1.length : void 0 : void 0 : void 0) > 0) {
         onload = function(e) {
-          var data;
+          var data, error;
           try {
             data = d3.csv.parseRows(atob(e.target.result.slice(21)));
             app.makeTable(data);
             return $('body').removeClass('dragenter dragover');
-          } catch (error) {
+          } catch (_error) {
+            error = _error;
             return console.error(e, error);
           }
         };
@@ -125,10 +134,10 @@
             reader.onload = onload;
             reader.readAsDataURL(file);
           }
-          if (((_ref3 = file.type) != null ? (_ref4 = _ref3.split('\/')) != null ? _ref4[0].toLowerCase() : void 0 : void 0) === 'image') {
+          if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
             reader = new FileReader();
             reader.onload = function(e) {
-              app.sections.push({
+              app.sections.add({
                 type: 'image',
                 value: e.target.result
               });
@@ -162,19 +171,20 @@
       return false;
     };
   };
+
   app.render = function() {
-    var editor, html, section, _i, _len, _ref;
+    var editor, html;
     $('body').removeClass('dragenter dragover');
-    $('.sections').empty();
-    _ref = app.sections;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      section = _ref[_i];
-      html = section.value;
-      if (section.type === 'image') {
-        html = "<img src=\"" + section.value + "\">";
+    html = '';
+    app.sections.each(function(section) {
+      var type, value, _ref;
+      _ref = section.toJSON(), value = _ref.value, type = _ref.type;
+      if (type === 'image') {
+        value = "<img src=\"" + section.value + "\">";
       }
-      $('.sections').append("<div class=\"section\" data-type=\"" + section.type + "\">\n    <div class=\"section-helpers\">\n        <div class=\"section-drag-handle\"></div>\n    </div>\n    <div class=\"section-content\">\n        " + html + "\n    </div>\n    " + (section.caption ? "<div class='section-caption'>" + section.caption + "</div>" : '') + "\n</div>");
-    }
+      return html += "<div class=\"section\" data-type=\"" + type + "\">\n    <div class=\"section-helpers\">\n        <div class=\"section-drag-handle\"></div>\n    </div>\n    <div class=\"section-content\">\n        " + value + "\n    </div>\n    " + (section.caption ? "<div class='section-caption'>" + section.caption + "</div>" : '') + "\n</div>";
+    });
+    $('.sections').html(html);
     editor = new MediumEditor('.section[data-type="text"], .section[data-type="header"]', {
       buttons: ['bold', 'italic', 'quote'],
       firstHeader: 'h1',
@@ -198,6 +208,7 @@
       return $('body').removeClass('section-focused');
     });
   };
+
   app.setupAddSectionButton = function() {
     return $('.add-section').click(function() {
       app.sections.push({
@@ -207,6 +218,7 @@
       return app.render();
     });
   };
+
   app.saveExport = function() {
     document.body.classList.add('capturing');
     return setTimeout(function() {
@@ -218,7 +230,9 @@
       }, 0);
     }, 300);
   };
+
   setTimeout(function() {
     return app.init();
   }, 0);
+
 }).call(this);
