@@ -1,0 +1,92 @@
+@import compass/css3
+
+$medium_editor_bgcolor:       #000
+$medium_editor_border_color:  #fff
+$medium_editor_button_size:   60px
+$medium_editor_link_color:    #fff
+
+.medium-toolbar-arrow-under:after
+    top: $medium_editor_button_size
+    border-color: $medium_editor_bgcolor transparent transparent transparent
+
+.medium-toolbar-arrow-over:before
+    top: -8px
+    border-color: transparent transparent $medium_editor_bgcolor transparent
+
+.medium-editor-toolbar
+    background: rgba(255, 255, 255, .5)
+    font-size: inherit
+
+    li
+        padding: 0
+
+        button
+            font-size: inherit
+            background-color: $medium_editor_bgcolor
+            min-width: $medium_editor_button_size
+            height: $medium_editor_button_size
+            border: none
+            margin-right: 1px
+            color: $medium_editor_link_color
+            @include transition(background-color .2s ease-in, color .2s ease-in)
+            outline: none
+
+            &.medium-editor-action-bold
+
+                &, *
+                    font-weight: bold
+
+            &.medium-editor-action-italic
+
+                &, *
+                    font-weight: normal
+                    font-style: italic
+
+            &.medium-editor-action-quote
+
+                &, *
+                    font-weight: normal
+                    font-size: 40px
+
+            &:hover
+                background-color: darken($medium_editor_bgcolor, 20)
+                color: #fff
+
+        .medium-editor-button-active
+            background-color: darken($medium_editor_bgcolor, 30)
+            color: #fff
+
+        .medium-editor-button-last
+            margin-right: 0
+
+.medium-editor-toolbar-form-anchor
+    input
+        height: $medium_editor_button_size
+        background: $medium_editor_bgcolor
+        color: $medium_editor_link_color
+
+        &::-webkit-input-placeholder
+            color: #fff
+            color: rgba(#fff, .8)
+
+        &:-moz-placeholder /* Firefox 18- */
+            color: #fff
+            color: rgba(#fff, .8)
+
+        &::-moz-placeholder  /* Firefox 19+ */
+            color: #fff
+            color: rgba(#fff, .8)
+
+        &:-ms-input-placeholder
+            color: #fff
+            color: rgba(#fff, .8)
+
+    a
+        color: $medium_editor_link_color
+
+.medium-editor-toolbar-anchor-preview
+    background: $medium_editor_bgcolor
+    color: $medium_editor_link_color
+
+.medium-editor-placeholder:after
+    color: $medium_editor_border_color
