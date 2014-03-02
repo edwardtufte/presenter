@@ -62,17 +62,17 @@ body {
   border-top-width: 0; }
 .section:last-child .section-inner {
   border-bottom-width: 0; }
-.section.ui-sortable-helper {
+.section.ui-sortable-helper, .section:hover {
   background: rgba(255, 255, 243, 0.8); }
-  .section.ui-sortable-helper:first-child .section-inner {
+  .section.ui-sortable-helper:first-child .section-inner, .section:hover:first-child .section-inner {
     border-top-width: 1px; }
-  .section.ui-sortable-helper:last-child .section-inner {
+  .section.ui-sortable-helper:last-child .section-inner, .section:hover:last-child .section-inner {
     border-bottom-width: 1px; }
 .section .section-helpers {
   display: none;
   overflow: hidden;
   position: absolute;
-  top: -1px;
+  top: 0;
   left: 0; }
   .section .section-helpers * {
     margin-bottom: 1px;
@@ -172,10 +172,10 @@ body.dragover .drag-helper {
 .add-section:before {
   content: "Add " attr(data-type); }
 
-body.section-focused .section:not(.section-focused) {
+body.section-focused .section:not(.section-focused) .section-inner {
   opacity: 0.3; }
-  body.section-focused .section:not(.section-focused):hover {
-    opacity: 1; }
+body.section-focused .section:not(.section-focused):hover .section-inner {
+  opacity: 1; }
 
 .axis path, .axis line {
   fill: none;

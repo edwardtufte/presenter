@@ -74,7 +74,7 @@ body
     &:last-child .section-inner
         border-bottom-width: 0
 
-    &.ui-sortable-helper
+    &.ui-sortable-helper, &:hover
         background: rgba(255, 255, 243, 0.8)
 
         &:first-child .section-inner
@@ -87,7 +87,7 @@ body
         display: none
         overflow: hidden
         position: absolute
-        top: -1px
+        top: 0
         left: 0
 
         *
@@ -211,9 +211,11 @@ body.dragover .drag-helper
 body.section-focused
 
     .section:not(.section-focused)
-        opacity: 0.3
 
-        &:hover
+        .section-inner
+            opacity: 0.3
+
+        &:hover .section-inner
             opacity: 1
 
 .axis
