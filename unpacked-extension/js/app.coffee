@@ -162,7 +162,6 @@ class Section extends Backbone.View
 
     input: (e) ->
         @model.set 'value', @$el.html()
-        console.log @model
         return
 
     addFocus: ->

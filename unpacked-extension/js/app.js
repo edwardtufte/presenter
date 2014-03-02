@@ -180,7 +180,6 @@
 
     Section.prototype.input = function(e) {
       this.model.set('value', this.$el.html());
-      console.log(this.model);
     };
 
     Section.prototype.addFocus = function() {
