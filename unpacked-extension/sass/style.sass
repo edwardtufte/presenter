@@ -16,6 +16,18 @@ body
 
     min-width: 1050px
 
+.button
+    +inline-block
+    cursor: pointer
+    font-weight: normal
+    padding: 13px 19px 12px
+    font-size: 16px
+    background: red
+    color: #fff
+    text-align: center
+    text-transform: uppercase
+    letter-spacing: .05em
+
 .sections
     padding: 20px
     width: 1050px
@@ -30,7 +42,7 @@ body
     .section-inner
         margin-left: 150px
 
-        min-height: 132px
+        min-height: 91px
         transition: opacity .3s
         position: relative
         padding: 20px 0
@@ -72,47 +84,28 @@ body
             border-bottom-width: 1px
 
     .section-helpers
-        height: 0
+        display: none
         overflow: hidden
+        position: absolute
+        top: -1px
+        left: 0
+
+        *
+            margin-bottom: 1px
+            width: 130px
+            display: block
 
         .section-drag-handle
-            +inline-block
-            position: absolute
-            top: -1px
-            left: 0
-            height: 65px
-            width: 130px
-            opacity: 0
-            background: red
-            color: #fff
-            text-align: center
-            padding: 20px
             cursor: move
 
             &:before
                 content: "Reorder"
-                text-transform: uppercase
 
-        .section-delete
-            +inline-block
-            cursor: pointer
-            position: absolute
-            top: 66px
-            left: 0
-            height: 65px
-            width: 130px
-            opacity: 0
-            background: red
-            color: #fff
-            text-align: center
-            padding: 20px
-
-            &:before
-                content: "Remove"
-                text-transform: uppercase
+        .section-delete:before
+            content: "Remove"
 
     .section-caption
-        font-size: 15px
+        font-size: 17px
         width: 300px
         position: absolute
         top: 20px
@@ -124,11 +117,7 @@ body
     &:hover
 
         .section-helpers
-            height: auto
-            overflow: visible
-
-            .section-drag-handle, .section-delete
-                opacity: 1
+            display: block
 
         .section-caption.medium-editor-placeholder:after
             opacity: .5
@@ -139,6 +128,7 @@ body
         text-align: center
 
         img
+            pointer-events: none
             max-width: 100%
 
 .section[data-type="text"], .section[data-type="image"], .section[data-type="graph"]
@@ -210,16 +200,13 @@ body.dragover .drag-helper
     margin-bottom: 20px
 
 .add-section
-    +inline-block
-    cursor: pointer
-    padding: 20px
-    background: red
-    color: #fff
-    text-align: center
+    margin-right: 1px
 
-    &:before
-        content: "Add " attr(data-type)
-        text-transform: uppercase
+    &:last-child
+        margin-right: 0
+
+.add-section:before
+    content: "Add " attr(data-type)
 
 body.section-focused
 

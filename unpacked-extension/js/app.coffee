@@ -208,8 +208,8 @@ class Section extends Backbone.View
             .html("""
                 <div class="section-inner">
                     <div class="section-helpers">
-                        <div class="section-drag-handle"></div>
-                        <div class="section-delete"></div>
+                        <div class="section-drag-handle button"></div>
+                        <div class="section-delete button"></div>
                     </div>
                     <div class="section-content">
                         #{ value }
