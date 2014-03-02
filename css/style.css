@@ -24,7 +24,8 @@ body {
   margin-right: auto; }
 
 .section {
-  position: relative; }
+  position: relative;
+  page-break-inside: avoid; }
   .section .section-inner {
     *zoom: 1;
     margin: 0 auto;
