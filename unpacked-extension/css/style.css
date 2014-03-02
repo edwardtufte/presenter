@@ -15,11 +15,14 @@ body {
 .sections {
   padding: 20px;
   width: 1050px;
+  width: 1200px;
+  padding-right: 170px;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto; }
 
-.section {
+.section .section-inner {
+  margin-left: 150px;
   min-height: 132px;
   transition: opacity 0.3s;
   position: relative;
@@ -28,83 +31,86 @@ body {
   border-left-color: transparent;
   border-right-color: transparent;
   margin-top: -1px; }
-  .section .section-content {
+.section .section-content {
+  margin-left: 0; }
+.section:hover .section-inner, .section.section-focused .section-inner {
+  margin-left: 0;
+  border-color: red;
+  box-shadow: 0 0 0 2px red; }
+  .section:hover .section-inner .section-content, .section.section-focused .section-inner .section-content {
     margin-left: 150px; }
-  .section:hover, .section.section-focused {
-    border-color: red;
-    box-shadow: 0 0 0 2px red; }
-    .section:hover .section-content:focus, .section:hover .section-caption:focus, .section.section-focused .section-content:focus, .section.section-focused .section-caption:focus {
-      outline: none; }
-  .section:first-child {
-    border-top-width: 0; }
-  .section:last-child {
-    border-bottom-width: 0; }
-  .section.ui-sortable-helper {
-    background: rgba(255, 255, 243, 0.8); }
-    .section.ui-sortable-helper:first-child {
-      border-top-width: 1px; }
-    .section.ui-sortable-helper:last-child {
-      border-bottom-width: 1px; }
-  .section .section-helpers {
-    height: 0;
-    overflow: hidden; }
-    .section .section-helpers .section-drag-handle {
-      display: -moz-inline-stack;
-      display: inline-block;
-      vertical-align: middle;
-      *vertical-align: auto;
-      zoom: 1;
-      *display: inline;
-      position: absolute;
-      top: -1px;
-      left: 0;
-      height: 65px;
-      width: 130px;
-      opacity: 0;
-      background: red;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      cursor: move; }
-      .section .section-helpers .section-drag-handle:before {
-        content: "Reorder";
-        text-transform: uppercase; }
-    .section .section-helpers .section-delete {
-      display: -moz-inline-stack;
-      display: inline-block;
-      vertical-align: middle;
-      *vertical-align: auto;
-      zoom: 1;
-      *display: inline;
-      cursor: pointer;
-      position: absolute;
-      top: 66px;
-      left: 0;
-      height: 65px;
-      width: 130px;
-      opacity: 0;
-      background: red;
-      color: white;
-      text-align: center;
-      padding: 20px; }
-      .section .section-helpers .section-delete:before {
-        content: "Remove";
-        text-transform: uppercase; }
-  .section .section-caption {
-    font-size: 15px;
-    width: 300px;
+  .section:hover .section-inner .section-content:focus, .section:hover .section-inner .section-caption:focus, .section.section-focused .section-inner .section-content:focus, .section.section-focused .section-inner .section-caption:focus {
+    outline: none; }
+.section:first-child .section-inner {
+  border-top-width: 0; }
+.section:last-child .section-inner {
+  border-bottom-width: 0; }
+.section.ui-sortable-helper {
+  background: rgba(255, 255, 243, 0.8); }
+  .section.ui-sortable-helper:first-child .section-inner {
+    border-top-width: 1px; }
+  .section.ui-sortable-helper:last-child .section-inner {
+    border-bottom-width: 1px; }
+.section .section-helpers {
+  height: 0;
+  overflow: hidden; }
+  .section .section-helpers .section-drag-handle {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline;
     position: absolute;
-    top: 20px;
-    right: 0; }
-    .section .section-caption.medium-editor-placeholder:after {
-      opacity: 0; }
-  .section:hover .section-helpers {
-    height: auto;
-    overflow: visible; }
-    .section:hover .section-helpers .section-drag-handle, .section:hover .section-helpers .section-delete {
-      opacity: 1; }
-  .section:hover .section-caption.medium-editor-placeholder:after {
-    opacity: 0.5; }
+    top: -1px;
+    left: 0;
+    height: 65px;
+    width: 130px;
+    opacity: 0;
+    background: red;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    cursor: move; }
+    .section .section-helpers .section-drag-handle:before {
+      content: "Reorder";
+      text-transform: uppercase; }
+  .section .section-helpers .section-delete {
+    display: -moz-inline-stack;
+    display: inline-block;
+    vertical-align: middle;
+    *vertical-align: auto;
+    zoom: 1;
+    *display: inline;
+    cursor: pointer;
+    position: absolute;
+    top: 66px;
+    left: 0;
+    height: 65px;
+    width: 130px;
+    opacity: 0;
+    background: red;
+    color: white;
+    text-align: center;
+    padding: 20px; }
+    .section .section-helpers .section-delete:before {
+      content: "Remove";
+      text-transform: uppercase; }
+.section .section-caption {
+  font-size: 15px;
+  width: 300px;
+  position: absolute;
+  top: 20px;
+  right: 0; }
+  .section .section-caption.medium-editor-placeholder:after {
+    opacity: 0; }
+.section:hover .section-helpers {
+  height: auto;
+  overflow: visible; }
+  .section:hover .section-helpers .section-drag-handle, .section:hover .section-helpers .section-delete {
+    opacity: 1; }
+.section:hover .section-caption.medium-editor-placeholder:after {
+  opacity: 0.5; }
 
 .section[data-type="image"] {
   text-align: center; }
@@ -114,6 +120,9 @@ body {
 .section[data-type="text"] .section-content {
   width: 500px;
   max-width: 100%; }
+
+.section[data-type="header"] .section-caption {
+  display: none; }
 
 h1, h2, h3 {
   color: red;

@@ -187,15 +187,17 @@ class Section extends Backbone.View
             value = """<img src="#{ value }">"""
 
         @$el.attr('data-type', type).html("""
-            <div class="section-helpers">
-                <div class="section-drag-handle"></div>
-                <div class="section-delete"></div>
-            </div>
-            <div class="section-content">
-                #{ value }
-            </div>
-            <div class="section-caption">
-                #{ caption }
+            <div class="section-inner">
+                <div class="section-helpers">
+                    <div class="section-drag-handle"></div>
+                    <div class="section-delete"></div>
+                </div>
+                <div class="section-content">
+                    #{ value }
+                </div>
+                <div class="section-caption">
+                    #{ caption }
+                </div>
             </div>
         """)
         @

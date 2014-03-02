@@ -19,45 +19,56 @@ body
 .sections
     padding: 20px
     width: 1050px
+    width: 1200px
+    padding-right: 170px
     max-width: 100%
     margin-left: auto
     margin-right: auto
 
 .section
-    min-height: 132px
-    transition: opacity .3s
-    position: relative
-    padding: 20px 0
-    border: 1px solid rgba(255, 0, 0, 0.06)
-    border-left-color: transparent
-    border-right-color: transparent
-    margin-top: -1px
 
-    .section-content
+    .section-inner
         margin-left: 150px
 
-    &:hover, &.section-focused
+        min-height: 132px
+        transition: opacity .3s
+        position: relative
+        padding: 20px 0
+        border: 1px solid rgba(255, 0, 0, 0.06)
+        border-left-color: transparent
+        border-right-color: transparent
+        margin-top: -1px
+
+    .section-content
+        margin-left: 0
+
+    &:hover .section-inner, &.section-focused .section-inner
+        margin-left: 0
+
         border-color: red
         box-shadow: 0 0 0 2px red
+
+        .section-content
+            margin-left: 150px
 
         .section-content, .section-caption
 
             &:focus
                 outline: none
 
-    &:first-child
+    &:first-child .section-inner
         border-top-width: 0
 
-    &:last-child
+    &:last-child .section-inner
         border-bottom-width: 0
 
     &.ui-sortable-helper
         background: rgba(255, 255, 243, 0.8)
 
-        &:first-child
+        &:first-child .section-inner
             border-top-width: 1px
 
-        &:last-child
+        &:last-child .section-inner
             border-bottom-width: 1px
 
     .section-helpers
@@ -133,6 +144,11 @@ body
     .section-content
         width: 500px
         max-width: 100%
+
+.section[data-type="header"]
+
+    .section-caption
+        display: none
 
 h1, h2, h3
     color: red

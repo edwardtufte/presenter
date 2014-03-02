@@ -196,7 +196,7 @@
       if (type === 'image') {
         value = "<img src=\"" + value + "\">";
       }
-      this.$el.attr('data-type', type).html("<div class=\"section-helpers\">\n    <div class=\"section-drag-handle\"></div>\n    <div class=\"section-delete\"></div>\n</div>\n<div class=\"section-content\">\n    " + value + "\n</div>\n<div class=\"section-caption\">\n    " + caption + "\n</div>");
+      this.$el.attr('data-type', type).html("<div class=\"section-inner\">\n    <div class=\"section-helpers\">\n        <div class=\"section-drag-handle\"></div>\n        <div class=\"section-delete\"></div>\n    </div>\n    <div class=\"section-content\">\n        " + value + "\n    </div>\n    <div class=\"section-caption\">\n        " + caption + "\n    </div>\n</div>");
       return this;
     };
     Section.prototype.handleDelete = function(e) {
