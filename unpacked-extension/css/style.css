@@ -96,11 +96,15 @@ body {
     position: absolute;
     top: 20px;
     right: 0; }
+    .section .section-caption.medium-editor-placeholder:after {
+      opacity: 0; }
   .section:hover .section-helpers {
     height: auto;
     overflow: visible; }
     .section:hover .section-helpers .section-drag-handle, .section:hover .section-helpers .section-delete {
       opacity: 1; }
+  .section:hover .section-caption.medium-editor-placeholder:after {
+    opacity: 0.5; }
 
 .section[data-type="image"] {
   text-align: center; }

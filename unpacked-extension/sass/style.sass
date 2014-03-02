@@ -107,6 +107,9 @@ body
         top: 20px
         right: 0
 
+        &.medium-editor-placeholder:after
+            opacity: 0
+
     &:hover
 
         .section-helpers
@@ -115,6 +118,9 @@ body
 
             .section-drag-handle, .section-delete
                 opacity: 1
+
+        .section-caption.medium-editor-placeholder:after
+            opacity: .5
 
 .section[data-type="image"]
     text-align: center
