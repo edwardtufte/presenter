@@ -10,6 +10,10 @@ body
     color: #000
     -webkit-font-smoothing: antialiased
 
+    font-weight: 300
+    font-size: 20px
+    line-height: 1.3
+
 *, *:after, *:before
     box-sizing: border-box
 
@@ -20,7 +24,7 @@ body
 
 .sections
     padding: 20px
-    width: 900px
+    width: 800px
     max-width: 100%
     margin-left: auto
     margin-right: auto
@@ -30,21 +34,35 @@ body
     border-bottom: 1px solid red
     margin-bottom: 20px
 
+.section[data-type="image"]
+    text-align: center
+
     img
         max-width: 100%
 
+h1, h2, h3
+    color: red
+    font-style: italic
+    font-weight: normal
+    letter-spacing: .03em
+    text-align: center
+
 h1
     font-size: 35px
-    font-style: italic
-    color: red
-    font-weight: normal
-    letter-spacing: 1px
+
+h2
+    font-size: 30px
+
+h3
+    font-size: 25px
 
 p
-    font-weight: 300
-    margin: 20px auto 0
-    font-size: 20px
-    line-height: 1.3
+    margin: 0 auto 20px
+    width: 500px
+    max-width: 100%
+
+    &:last-child
+        margin-bottom: 0
 
 .drag-helper
     display: none
