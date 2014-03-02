@@ -185,7 +185,7 @@ class Section extends Backbone.View
 
     input: (e) ->
         value = @$('.section-content').html()
-        caption = @$('section-caption').html()
+        caption = @$('.section-caption').html()
         @model.set {value, caption}
         return
 
@@ -201,7 +201,8 @@ class Section extends Backbone.View
         {value, type, caption} = @model.toJSON()
 
         if type is 'image'
-            value = """<img src="#{ value }">"""
+            if not "<img src=" in value
+                value = """<img src="#{ value }">"""
 
 
         @$el.attr('data-type', type)
