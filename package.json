@@ -1,0 +1,15 @@
+{
+  "name": "presentor",
+  "version": "0.1.0",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp-util": "~2.2.9",
+    "gulp": "~3.4.0",
+    "gulp-coffee": "~1.2.5",
+    "gulp-jade": "~0.3.0",
+    "gulp-stylus": "0.0.7",
+    "coffee-script": "~1.6.3",
+    "nib": "~1.0.2"
+  }
+}
