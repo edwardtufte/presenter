@@ -60,132 +60,6 @@ inferences based on a statistical graphic of observed data.
 },{
     type: 'text'
     value: '''
-<p> <font size="+2"><b><i>Sparklines: Intense, Simple, Word-Sized Graphics</i></b></font>
-</p><p>
-
-
-The most common data display is a noun accompanied by a number.
-For example, a medical patient's current level of glucose is reported
-in a clinical record as a word and number:
-
-
-    <table border="0" align="center">
-      <tbody><tr>
-        <td><img border="0" height="54" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1073.gif"></td>
-      </tr>
-    </tbody></table>
-
-<p>
-Placed in the relevant context, a single number gains meaning. Thus
-the most recent measurement of glucose should be compared with
-earlier measurements for the patient. This data-line shows the path
-of the last 80 readings of glucose:
-</p>
-
-    <table border="0" align="center">
-      <tbody><tr>
-        <td><img border="0" height="57" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1075.gif"></td>
-      </tr>
-    </tbody></table>
-<p>
-Lacking a scale of measurement, this free-floating line is dequantified.
-At least we do know the value of the line's right-most data point,
-which corresponds to the most recent value of glucose, the number
-recorded at far right. Both representations of the most recent reading
-are tied together with a color accent:
-</p>
-
-    <table border="0" align="center">
-      <tbody><tr>
-        <td><img border="0" height="57" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1077.gif"></td>
-      </tr>
-    </tbody></table>
-<p>
-Some useful context is provided by showing the <i>normal range</i> of
-glucose, here as a gray band. Compared to normal limits, readings
-above the band horizon are elevated, those below reduced:
-</p>
-
-    <table border="0" align="center">
-      <tbody><tr>
-        <td><img border="0" height="59" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1080.gif"></td>
-      </tr>
-    </tbody></table>
-<p>
-For clinical analysis, the task is to detect quickly and assess wayward
-deviations from normal limits, shown here by visual deviations outside
-the gray band. Multiplying this format brings in additional data from
-the medical record; a stack, which can show hundreds of variables and
-thousands of measurements, allows fast effective parallel comparisons:
-</p>
-
-    <table border="0" align="center">
-      <tbody><tr>
-        <td><img border="0" height="104" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1065.gif"></td>
-      </tr>
-    </tbody></table>
-<p>
-These little data lines, because of their active quality over time, are
-named <i>sparklines</i>—small, high-resolution graphics usually embedded
-in a full context of words, numbers, images. Sparklines are <i>datawords:</i>
-data-intense, design-simple, word-sized graphics.
-&nbsp;&nbsp;&nbsp;Sparklines and sparkline-like graphs can also move within complex
-multivariate spaces, as in these 9-step sequential results (reading down
-the columns) in merge-sorting 5 different types of input files. Four
-variables and 18,000 numbers are depicted in these small multiples.
-</p>
-
-<font size="-1">Below, Robert Sedgewick, <i>Algorithms in C</i> (Reading, Massachusetts, 1998), 353.</font>
-</p><p>
-
-    <table border="0" align="left">
-      <tbody><tr>
-        <td><img border="0" height="362" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-1067.gif"></td>
-      </tr>
-    </tbody></table>
-</p><p>
-
-
-Sparklines have obvious applications for financial and economic data—
-by tracking and comparing changes over time, by showing overall trend
-along with local detail. Embedded in a data table, this sparkline depicts
-an exchange rate (dollar cost of one euro) for every day for one year:
-
-
-    <table border="0" align="left">
-      <tbody><tr>
-        <td><img border="0" height="75" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-15655.gif"></td>
-      </tr>
-    </tbody></table>
-<p>
-Colors help link the sparkline with the numbers: <font color="red">red</font> = the oldest and
-newest rates in the series; <font color="blue">blue</font> = yearly low and high for daily exchange
-rates. Extending this graphic table is straightforward; here, the price of
-the euro versus 3 other currencies for 65 months and for 12 months:
-</p>
-
-    <table border="0" align="left">
-      <tbody><tr>
-        <td><img border="0" height="119" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-15656.gif"></td>
-      </tr>
-    </tbody></table>
-
-<p>
-Daily sparkline data can be standardized and scaled in all sorts of ways
-depending on the content: by the range of the price, inflation-adjusted
-price, percent change, percent change off of a market baseline. Thus
-<i>multiple sparklines</i> can describe the same noun, just as multiple columns
-of numbers report various measures of performance. These sparklines
-reveal the details of the most recent 12 months in the context of a
-65-month daily sequence (shown in the fractal-like structure below).
-</p>
-
-    <table border="0" align="left">
-      <tbody><tr>
-        <td><img border="0" height="122" width="950" src="http://www.edwardtufte.com/bboard/images/0001OS-15658.gif"></td>
-      </tr>
-    </tbody></table>
-
 <p>
 Consuming a horizontal length of only 14 letterspaces, each sparkline
 in the big table above provides a look at the price and the changes in
@@ -209,16 +83,6 @@ displays have far greater resolutions; a cartographer notes "the resolving
 power of the eye enables it to differentiate to 0.1 mm where provoked to
 do so."&nbsp;<font size="-1">2</font> &nbsp;Distinctions at 0.1 mm mean 250 per linear inch, which implies
 60,000 per square inch or 10,000 per square centimeter, which is plenty.</p>
-
-
-<p><font size="-1">1&nbsp;&nbsp;On being "approximately right rather than exactly wrong,"
-see John W. Tukey, "The Technical Tools of Statistics,"
-<i>American Statistician,</i> 19 (1965), 23-28.
-</font></p><p><font size="-1">
-2&nbsp;&nbsp;D. P. Bickmore, "The Relevance of Cartography," in J. C. Davis
-and M. J. McCullagh, eds., <i>Display and Analysis of Spatial Data</i>
-(London, 1975), 331.</font>
-</p>
     '''
 }]
 
@@ -279,15 +143,26 @@ app.render = ->
 
         $('.sections').append """
             <div class="section" data-type="#{ section.type }">
-                #{ html }
+                <div class="section-helpers">
+                    <div class="section-drag-handle"></div>
+                </div>
+                <div class="section-content">
+                    #{ html }
+                </div>
             </div>
         """
 
-    editor = new MediumEditor '.section',
+    editor = new MediumEditor '.section[data-type="text"]',
         buttons: ['bold', 'italic', 'quote']
         firstHeader: 'h1'
         secondHeader: 'h2'
         targetBlank: true
+
+    $('.sections').sortable
+        handle: '.section-drag-handle'
+        axis: 'y'
+
+    $('.page-scroll').scroll -> $('body').scroll()
 
 app.saveExport = ->
     document.body.classList.add('capturing')
