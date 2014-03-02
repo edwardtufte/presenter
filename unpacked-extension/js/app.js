@@ -245,11 +245,10 @@
   };
   app.setupAddSectionButton = function() {
     return $('.add-section').click(function() {
-      app.sections.push({
+      return app.sections.add({
         type: 'text',
         value: '<p>New paragraph...</p>'
       });
-      return app.render();
     });
   };
   app.saveExport = function() {

@@ -325,11 +325,9 @@ app.render = ->
 
 app.setupAddSectionButton = ->
     $('.add-section').click ->
-        app.sections.push {
+        app.sections.add
             type: 'text'
             value: '<p>New paragraph...</p>'
-        }
-        app.render()
 
 app.saveExport = ->
     document.body.classList.add('capturing')
