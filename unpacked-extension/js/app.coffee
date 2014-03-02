@@ -161,6 +161,8 @@ app.render = ->
     $('.sections').sortable
         handle: '.section-drag-handle'
         axis: 'y'
+        start: (e, ui) ->
+            ui.placeholder.height ui.helper.height()
 
     $('.page-scroll').scroll -> $('body').scroll()
 

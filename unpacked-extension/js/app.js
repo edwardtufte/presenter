@@ -99,7 +99,10 @@
     });
     $('.sections').sortable({
       handle: '.section-drag-handle',
-      axis: 'y'
+      axis: 'y',
+      start: function(e, ui) {
+        return ui.placeholder.height(ui.helper.height());
+      }
     });
     return $('.page-scroll').scroll(function() {
       return $('body').scroll();
