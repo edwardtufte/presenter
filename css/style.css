@@ -165,6 +165,17 @@ body.dragover .drag-helper {
   .add-section:before {
     content: "Add content"; }
 
+.load-mock-data {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  color: white;
+  padding: 13px 19px 12px;
+  font-weight: normal; }
+  .load-mock-data:before {
+    content: "Load example document"; }
+
 body.section-focused .section.section-focused .section-inner:before {
   content: "";
   position: absolute;
