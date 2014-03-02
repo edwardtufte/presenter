@@ -45,11 +45,14 @@
         onload = (function(_this) {
           return function(file) {
             return function(e) {
-              var data, _ref2, _ref3;
-              if (file.type === 'text/csv') {
-                data = d3.csv.parseRows(atob(e.target.result.slice(21)));
-                _this.makeTable(data);
-              } else if (((_ref2 = file.type) != null ? (_ref3 = _ref2.split('\/')) != null ? _ref3[0].toLowerCase() : void 0 : void 0) === 'image') {
+              var b64Data, data, _ref2, _ref3, _ref4;
+              if ((_ref2 = file.type) === 'text/csv' || _ref2 === 'text/plain') {
+                b64Data = e.target.result.split('base64,');
+                if (b64Data.length === 2) {
+                  data = d3.csv.parseRows(atob(b64Data[1]));
+                  _this.makeTable(data);
+                }
+              } else if (((_ref3 = file.type) != null ? (_ref4 = _ref3.split('\/')) != null ? _ref4[0].toLowerCase() : void 0 : void 0) === 'image') {
                 _this.collection.add({
                   type: 'image',
                   value: e.target.result

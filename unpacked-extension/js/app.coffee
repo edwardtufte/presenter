@@ -20,9 +20,11 @@ class App extends Backbone.View
         if e?.dataTransfer?.files?.length > 0
             onload = (file) =>
                 return (e) =>
-                    if file.type is 'text/csv'
-                        data = d3.csv.parseRows(atob(e.target.result.slice(21)))
-                        @makeTable(data)
+                    if file.type in ['text/csv', 'text/plain']
+                        b64Data = e.target.result.split('base64,')
+                        if b64Data.length is 2
+                            data = d3.csv.parseRows(atob(b64Data[1]))
+                            @makeTable(data)
                     else if file.type?.split('\/')?[0].toLowerCase() is 'image'
                         @collection.add
                             type: 'image'
