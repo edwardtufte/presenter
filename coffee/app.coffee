@@ -1,4 +1,5 @@
 window.log = -> console.log.apply console, Array::slice.call(arguments) if @console and @console.log
+
 $ ->
     $('body').removeClass('dragenter dragover')
     $('.page-scroll').scroll -> $('body').scroll()

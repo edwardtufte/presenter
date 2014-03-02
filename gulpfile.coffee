@@ -4,6 +4,7 @@ jade = require('gulp-jade')
 coffee = require('gulp-coffee')
 concat = require('gulp-concat')
 gutil = require('gulp-util')
+plumber = require('gulp-plumber')
 
 handleError = (taskName) ->
   return ->
@@ -28,7 +29,9 @@ gulp.task 'coffee', ->
       './coffee/SectionView.coffee'
       './coffee/SectionsView.coffee'
       './coffee/app.coffee'
-    ]).pipe(coffeeStream)
+    ])
+      .pipe(plumber())
+      .pipe(coffeeStream)
       .pipe(concat("app.js"))
       .pipe(gulp.dest('./js/'))
   catch e
@@ -42,7 +45,9 @@ gulp.task 'plugins', ->
     './js/backbone.js'
     './js/d3.js'
     './js/medium-editor.js'
-  ]).pipe(concat("plugins.js"))
+  ])
+    .pipe(plumber())
+    .pipe(concat("plugins.js"))
     .pipe(gulp.dest('./js/'))
 
 gulp.task 'stylus', ->
@@ -50,6 +55,7 @@ gulp.task 'stylus', ->
     .on('error', handleError('stylus'))
 
   gulp.src('./styl/index.styl')
+    .pipe(plumber())
     .pipe(stylusStream)
     .pipe(gulp.dest('./css/'))
 
@@ -58,6 +64,7 @@ gulp.task 'jade', ->
     .on('error', handleError('jade'))
 
   gulp.src('./jade/*')
+    .pipe(plumber())
     .pipe(jadeStream)
     .pipe(gulp.dest('./'))
 

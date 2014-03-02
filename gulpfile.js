@@ -1,5 +1,5 @@
 (function() {
-  var coffee, concat, gulp, gutil, handleError, jade, stylus;
+  var coffee, concat, gulp, gutil, handleError, jade, plumber, stylus;
 
   gulp = require('gulp');
 
@@ -13,11 +13,12 @@
 
   gutil = require('gulp-util');
 
+  plumber = require('gulp-plumber');
+
   handleError = function(taskName) {
     return function() {
       gutil.beep.apply(arguments);
-      gutil.log.apply(arguments);
-      return gulp.run(taskName);
+      return gutil.log.apply(arguments);
     };
   };
 
@@ -29,7 +30,7 @@
     var coffeeStream, e;
     coffeeStream = coffee().on('error', handleError('coffee'));
     try {
-      return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(coffeeStream).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
+      return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(plumber()).pipe(coffeeStream).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
     } catch (_error) {
       e = _error;
       return gutil.log(e);
@@ -37,7 +38,7 @@
   });
 
   gulp.task('plugins', function() {
-    return gulp.src(['./js/jquery.js', './js/jquery-ui.js', './js/underscore.js', './js/backbone.js', './js/d3.js', './js/medium-editor.js']).pipe(concat("plugins.js")).pipe(gulp.dest('./js/'));
+    return gulp.src(['./js/jquery.js', './js/jquery-ui.js', './js/underscore.js', './js/backbone.js', './js/d3.js', './js/medium-editor.js']).pipe(plumber()).pipe(concat("plugins.js")).pipe(gulp.dest('./js/'));
   });
 
   gulp.task('stylus', function() {
@@ -45,7 +46,7 @@
     stylusStream = stylus({
       use: ['nib']
     }).on('error', handleError('stylus'));
-    return gulp.src('./styl/index.styl').pipe(stylusStream).pipe(gulp.dest('./css/'));
+    return gulp.src('./styl/index.styl').pipe(plumber()).pipe(stylusStream).pipe(gulp.dest('./css/'));
   });
 
   gulp.task('jade', function() {
@@ -53,7 +54,7 @@
     jadeStream = jade({
       pretty: true
     }).on('error', handleError('jade'));
-    return gulp.src('./jade/*').pipe(jadeStream).pipe(gulp.dest('./'));
+    return gulp.src('./jade/*').pipe(plumber()).pipe(jadeStream).pipe(gulp.dest('./'));
   });
 
   gulp.task('watch-coffee', function() {

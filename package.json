@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "gulp-concat": "~2.1.7",
-    "gulp-util": "~2.2.14"
+    "gulp-util": "~2.2.14",
+    "gulp-plumber": "~0.5.6"
   }
 }
