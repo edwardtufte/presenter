@@ -1,5 +1,5 @@
 (function() {
-  var coffee, concat, gulp, jade, stylus;
+  var coffee, concat, gulp, gutil, handleError, jade, stylus;
 
   gulp = require('gulp');
 
@@ -11,12 +11,29 @@
 
   concat = require('gulp-concat');
 
+  gutil = require('gulp-util');
+
+  handleError = function(taskName) {
+    return function() {
+      gutil.beep.apply(arguments);
+      gutil.log.apply(arguments);
+      return gulp.run(taskName);
+    };
+  };
+
   gulp.task('gulp', function() {
     return gulp.src(['./gulpfile.coffee']).pipe(coffee()).pipe(gulp.dest('./'));
   });
 
   gulp.task('coffee', function() {
-    return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(coffee()).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
+    var coffeeStream, e;
+    coffeeStream = coffee().on('error', handleError('coffee'));
+    try {
+      return gulp.src(['./coffee/setup.coffee', './coffee/AppView.coffee', './coffee/SectionModel.coffee', './coffee/SectionCollection.coffee', './coffee/SectionView.coffee', './coffee/SectionsView.coffee', './coffee/app.coffee']).pipe(coffeeStream).pipe(concat("app.js")).pipe(gulp.dest('./js/'));
+    } catch (_error) {
+      e = _error;
+      return gutil.log(e);
+    }
   });
 
   gulp.task('plugins', function() {
@@ -24,28 +41,41 @@
   });
 
   gulp.task('stylus', function() {
-    return gulp.src('./styl/index.styl').pipe(stylus({
+    var stylusStream;
+    stylusStream = stylus({
       use: ['nib']
-    })).pipe(gulp.dest('./css/'));
+    }).on('error', handleError('stylus'));
+    return gulp.src('./styl/index.styl').pipe(stylusStream).pipe(gulp.dest('./css/'));
   });
 
   gulp.task('jade', function() {
-    return gulp.src('./jade/*').pipe(jade({
+    var jadeStream;
+    jadeStream = jade({
       pretty: true
-    })).pipe(gulp.dest('./'));
+    }).on('error', handleError('jade'));
+    return gulp.src('./jade/*').pipe(jadeStream).pipe(gulp.dest('./'));
   });
 
-  gulp.task('default', function() {
-    gulp.run('coffee', 'stylus', 'jade', 'plugins');
-    gulp.watch('./coffee/*', function() {
+  gulp.task('watch-coffee', function() {
+    return gulp.watch('./coffee/*', function() {
       return gulp.run('coffee');
     });
-    gulp.watch('./styl/*', function() {
+  });
+
+  gulp.task('watch-stylus', function() {
+    return gulp.watch('./styl/*', function() {
       return gulp.run('stylus');
     });
+  });
+
+  gulp.task('watch-jade', function() {
     return gulp.watch('./jade/*', function() {
       return gulp.run('jade');
     });
+  });
+
+  gulp.task('default', function() {
+    return gulp.run('coffee', 'stylus', 'jade', 'plugins', 'watch-coffee', 'watch-jade', 'watch-stylus');
   });
 
 }).call(this);

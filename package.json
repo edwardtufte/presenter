@@ -13,6 +13,7 @@
     "nib": "~1.0.2"
   },
   "dependencies": {
-    "gulp-concat": "~2.1.7"
+    "gulp-concat": "~2.1.7",
+    "gulp-util": "~2.2.14"
   }
 }
