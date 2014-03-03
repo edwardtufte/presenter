@@ -12,7 +12,7 @@ $ ->
       appView = new app.AppView
           collection: new app.SectionsCollection(sections)
 
-    if localStorage.mock
+    if localStorage.mock or window.location.search.indexOf('mock') >= 0
       $.getJSON 'mockData.json', (data) ->
         createView(data)
 
