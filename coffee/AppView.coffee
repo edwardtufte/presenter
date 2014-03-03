@@ -136,6 +136,7 @@ class app.AppView extends Backbone.View
         columns = data.shift()
         rows = data
         html = "<table><thead><tr>"
+        text = false
 
         for column in columns
             html += "<th>" + column + "</th>"
@@ -147,13 +148,16 @@ class app.AppView extends Backbone.View
 
             for column in row
                 html += "<td>" + column + "</td>"
+                if not text
+                    text = isNaN(parseInt(column, 10))
 
             html += "</tr>"
 
         html += '</tbody></table>'
 
-        graphHtml = @makeGraph(columns, rows)
+        if not text
+            html = html + @makeGraph(columns, rows)
 
         @collection.add
             type: 'graph'
-            value: "<div class='chart'>#{html + graphHtml}</div>"
+            value: "<div class='chart'>#{html}</div>"
