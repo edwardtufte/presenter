@@ -1,0 +1,11 @@
+Ten most frequently used sorting algorithms,Percentage of lists sorted with algorithm,Number of times sorted with algorithm
+Quicksort,25%,423
+Merge sort,12%,234
+In-place merge sort,7%,132
+Heapsort,6%,124
+Insertion sort,5%,94
+Introsort,4%,83
+Selection sort,3%,78
+Timsort,2%,54
+Shell sort,1%,34
+Bubble sort,1%,34
