@@ -39,7 +39,7 @@ class app.Section extends Backbone.View
                     <div class="section-helpers section-helpers-right">
                         <div class="section-delete"></div>
                     </div>
-                    <div class="section-content">
+                    <div class="section-content" contenteditable="true">
                         #{ value }
                     </div>
                     <div class="section-caption">
