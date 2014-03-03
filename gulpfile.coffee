@@ -23,7 +23,6 @@ gulp.task 'coffee', ->
   try
     gulp.src([
       './coffee/setup.coffee'
-      './coffee/mockData.coffee'
       './coffee/AppView.coffee'
       './coffee/SectionModel.coffee'
       './coffee/SectionCollection.coffee'

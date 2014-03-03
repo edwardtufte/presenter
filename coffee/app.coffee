@@ -8,8 +8,16 @@ $ ->
         value: '<p>Content...</p>'
     ]
 
-    if localStorage['presenterSections']
-        sections = JSON.parse(localStorage.presenterSections)
+    createView = (sections) ->
+      appView = new app.AppView
+          collection: new app.SectionsCollection(sections)
 
-    appView = new app.AppView
-        collection: new app.SectionsCollection(sections)
+    if localStorage.mock
+      $.getJSON 'mockData.json', (data) ->
+        createView(data)
+
+    else if localStorage['presenterSections']
+        data = JSON.parse(localStorage.presenterSections)
+        createView(data)
+    else
+      createView()
