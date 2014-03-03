@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *, *:after, *:before {
   box-sizing: border-box; }
 
@@ -120,9 +121,6 @@ pre {
   font-family: Menlo, monospace;
   font-size: 13px; }
 
-table th {
-  font-weight: normal; }
-
 .section-content *:last-child, .section-caption *:last-child {
   margin-bottom: 0; }
 
@@ -190,6 +188,23 @@ body.section-focused .section.section-focused .section-inner:before {
   display: inline-block; }
 .chart table {
   display: inline-block;
-  vertical-align: top;
-  margin-right: 25px;
-  margin-bottom: 25px; }
+  border-collapse: collapse;
+  margin-bottom: 1em; }
+  .chart table th {
+    padding-right: 20px;
+    padding-bottom: 0.7em;
+    text-align: left;
+    border-bottom: 1px solid black;
+    font-weight: inherit; }
+    .chart table th:last-child {
+      padding-right: 0; }
+  .chart table td {
+    text-align: right;
+    padding-right: 80px; }
+    .chart table td:first-child {
+      text-align: left;
+      padding-right: 0; }
+    .chart table td:last-child {
+      padding-right: 60px; }
+  .chart table tr:first-child td {
+    padding-top: 0.7em; }
