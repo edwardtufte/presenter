@@ -125,7 +125,7 @@ body
             opacity: .5
 
     &.ui-sortable-helper
-        background: rgba(255, 255, 255, 0.8)
+        background: rgba(255, 255, 255, .8)
 
         .section-helpers
             opacity: 1
@@ -175,7 +175,16 @@ pre
     font-family: Menlo, monospace
     font-size: 13px
 
+ul
+    padding: 0
+
+    li
+        margin-bottom: .6em
+
 .section-content, .section-caption
+
+    *:first-child
+        margin-top: 0
 
     *:last-child
         margin-bottom: 0
@@ -228,7 +237,7 @@ body.section-focused
             position: absolute
             top: 0
             bottom: 1em
-            left: 80px
+            left: 55px
             width: 1px
             background: red
 
