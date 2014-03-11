@@ -2,14 +2,36 @@
 *, *:after, *:before {
   box-sizing: border-box; }
 
+@font-face {
+  font-family: "ETBembo-webfont";
+  src: url("/presenter/font/et-bembo/webfont/roman-line-figures/etbembo-romanlf-webfont.eot");
+  src: url("/presenter/font/et-bembo/webfont/roman-line-figures/etbembo-romanlf-webfont.eot?#iefix") format("embedded-opentype"), url("/presenter/font/et-bembo/webfont/roman-line-figures/etbembo-romanlf-webfont.woff") format("woff"), url("/presenter/font/et-bembo/webfont/roman-line-figures/etbembo-romanlf-webfont.ttf") format("truetype"), url("/presenter/font/et-bembo/webfont/roman-line-figures/etbembo-romanlf-webfont.svg#etbemboromanosf") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "ETBembo-webfont";
+  src: url("/presenter/font/et-bembo/webfont/display-italic-old-style-figures/etbembo-displayitalic-webfont.eot");
+  src: url("/presenter/font/et-bembo/webfont/display-italic-old-style-figures/etbembo-displayitalic-webfont.eot?#iefix") format("embedded-opentype"), url("/presenter/font/et-bembo/webfont/display-italic-old-style-figures/etbembo-displayitalic-webfont.woff") format("woff"), url("/presenter/font/et-bembo/webfont/display-italic-old-style-figures/etbembo-displayitalic-webfont.ttf") format("truetype"), url("/presenter/font/et-bembo/webfont/display-italic-old-style-figures/etbembo-displayitalic-webfont.svg#etbemboromanosf") format("svg");
+  font-weight: normal;
+  font-style: italic; }
+
+@font-face {
+  font-family: "ETBembo-webfont";
+  src: url("/presenter/font/et-bembo/webfont/bold-line-figures/etbembo-boldlf-webfont.eot");
+  src: url("/presenter/font/et-bembo/webfont/bold-line-figures/etbembo-boldlf-webfont.eot?#iefix") format("embedded-opentype"), url("/presenter/font/et-bembo/webfont/bold-line-figures/etbembo-boldlf-webfont.woff") format("woff"), url("/presenter/font/et-bembo/webfont/bold-line-figures/etbembo-boldlf-webfont.ttf") format("truetype"), url("/presenter/font/et-bembo/webfont/bold-line-figures/etbembo-boldlf-webfont.svg#etbemboromanosf") format("svg");
+  font-weight: bold;
+  font-style: normal; }
+
 body {
   margin: 0;
-  font-family: "Gill Sans", "Helvetica Neue", sans-serif;
+  font-family: "ETBembo-webfont", serif;
   background: black;
   color: white;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.3;
   letter-spacing: 0.03em;
   min-width: 1200px; }
@@ -94,7 +116,7 @@ body {
     max-width: 100%; }
 
 .section[data-type="text"] .section-content, .section[data-type="image"] .section-content, .section[data-type="graph"] .section-content {
-  width: 500px;
+  width: 530px;
   float: left;
   max-width: 100%; }
 
