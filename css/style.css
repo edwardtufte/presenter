@@ -143,6 +143,13 @@ pre {
   font-family: Menlo, monospace;
   font-size: 13px; }
 
+ul {
+  padding: 0; }
+  ul li {
+    margin-bottom: 0.6em; }
+
+.section-content *:first-child, .section-caption *:first-child {
+  margin-top: 0; }
 .section-content *:last-child, .section-caption *:last-child {
   margin-bottom: 0; }
 
