@@ -8,6 +8,7 @@ body {
   background: black;
   color: white;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   font-weight: 300;
   font-size: 20px;
   line-height: 1.3;
